@@ -53,16 +53,19 @@
                         </div>
                     </div>
                     <div class="row text-center mt-5">
-                        <div class="col">
+                        <div class="col-1">
+
+                        </div>
+                        <div class="col-2 text-left">
                             <p>Match</p>
                         </div>
-                        <div class="col">
+                        <div class="col-5">
                             <p>List</p>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <p>Got</p>
                         </div>
-                        <div class="col">
+                        <div class="col-2">
                             <p>chance</p>
                         </div>
                     </div>
@@ -204,28 +207,29 @@
                         for (let i = 0; i < len; i++) {
                             const list = response['list'][i].name_list;
 
-                            const statform = '<div class="col-3">' +
+                            const statform = '<div class="col-1"></div>' +
+                                '<div class="col-2">' +
                                 ' <div class="field">' +
                                 '<p class="control">' +
-                                '<input class="input" type="text" name="more[' + i + '][id]" readonly value="' + id_match + '">' +
+                                '<input class="form-control-plaintext" type="text" name="more[' + i + '][id]" readonly value="' + id_match + '">' +
                                 ' </p>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="col-3">' +
+                                '<div class="col-5">' +
                                 ' <div class="field">' +
                                 '<p class="control">' +
-                                '<input class="input" type="text" name="more[' + i + '][list]" readonly value="' + list + '">' +
+                                '<input class="form-control-plaintext" type="text" name="more[' + i + '][list]" readonly value="' + list + '">' +
                                 ' </p>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="col-3">' +
+                                '<div class="col-2">' +
                                 ' <div class="field">' +
                                 '<p class="control">' +
                                 '<input class="input" type="number" name="more[' + i + '][got]" value="0">' +
                                 ' </p>' +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="col-3">' +
+                                '<div class="col-2">' +
                                 ' <div class="field">' +
                                 '<p class="control">' +
                                 '<input class="input" type="number" name="more[' + i + '][chance]" value="0">' +
@@ -256,6 +260,7 @@
                         toastr["error"](data.msg);
                     } else if (data.code == 200) {
                         toastr["success"](data.msg);
+                        $('#addStatistics').modal('hide');
                     }
                 }
             })

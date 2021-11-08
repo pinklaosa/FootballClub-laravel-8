@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -24,53 +25,61 @@ class RivalController extends Controller
             $name = [
                 'namerival' => $rival
             ];
-            
-            
+
+
             $data = array(
                 'list' => DB::table('member_rival')
-                // ->join('statistics_rival', 'id_member_rival', '=', 'id_member_rival')
-                ->where('id_rival',$id_rival)
-                ->get()
+                    // ->join('statistics_rival', 'id_member_rival', '=', 'id_member_rival')
+                    ->where('id_rival', $id_rival)
+                    ->get()
             );
         }
-        return view('page.pageRivalMember', $data,$name);
+        return view('page.pageRivalMember', $data, $name);
     }
 
+    public function getRiavalTeam()
+    {
+        $rival =  DB::table('rival')->get();
+        
+        if($rival){
+            return response()->json([
+                'status' => 200,
+                'rival' => $rival,
+            ]);
+        }else{
+            return response()->json([
+                'status' => 404,
+                'message' => 'List not found',
+            ]);
+        }
+    }
     public function rival()
     {
-        if (session()->has('LoggedUser')) {
-            $user = DB::table('users')
-                ->where('id', session('LoggedUser'))
-                ->first();
-
-            $name = [
-                'LoggedUserInfo' => $user
-            ];
-
-            $data = array(
-                'list' => DB::table('rival')->get()
-            );
-        }
-        return view('page.pageRival', $data,$name);
+        return view('page.pageRival');
     }
+
 
     public function statistics($id_mr)
     {
         $staList = DB::table('statistics_rival')
-        ->where('id_mr',$id_mr)
-        ->get();
+            ->where('id_mr', $id_mr)
+            ->get();
 
-        if($staList){
+        if ($staList) {
             return response()->json([
-                'status'=>200,
-                'listSta'=>$staList,
+                'status' => 200,
+                'listSta' => $staList,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'List not found',
             ]);
         }
-        else{
-            return response()->json([
-                'status'=>404,
-                'message'=>'List not found',
-            ]);
-        }
+    }
+
+    public function addRivalTeam()
+    {
+        
     }
 }

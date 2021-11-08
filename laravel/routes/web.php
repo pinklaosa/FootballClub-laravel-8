@@ -52,8 +52,10 @@ Route::get('/fullcalender', [FullCalenderController::class,'index'])->middleware
 Route::post('fullcalenderAjax', [FullCalenderController::class, 'ajax']);
 
 Route::get('/rival',[RivalController::class,'rival'])->middleware('isLogged');
+Route::get('/getrivalteam',[RivalController::class,'getRiavalTeam']);
 Route::get('/rivalmember',[RivalController::class,'rivalMembers']);
 Route::get('/rivalmember/{id_mr}',[RivalController::class,'statistics']);
+Route::post('/addrivalteam',[RivalController::class,'addRivalTeam'])->name('add.rival');
 
 Route::get('/statistics',[MemberController::class,'showStatistics']);
 Route::get('/getstatistics',[MemberController::class,'usStatistics']);

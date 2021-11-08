@@ -108,7 +108,8 @@
                                         </span>
                                     </label>
                                 </div> -->
-                                <input type="file" name="photo">
+                                
+                                <input class="form-control" type="file" name="photo" id="formFile">
                             </div>
                         </div>
                     </div>
