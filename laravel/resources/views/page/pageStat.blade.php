@@ -35,15 +35,27 @@
 <div class="modal fade" id="addStatistics" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Statistics</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="post">
-
-                    <h5> Position : </h5>
-                    <div class="row text-center mt-3">
+            <form action="{{ route('add.statistics') }}" method="post" id="formAddStat">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <h5> Position : <span id="position"></span></h5>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-1 col align-self-center">
+                            ID :
+                        </div>
+                        <div class="col-1 text-center">
+                            <input class="input" type="text" name="id_member" id="id_member" readonly value="0">
+                        </div>
+                    </div>
+                    <div class="row text-center mt-5">
+                        <div class="col">
+                            <p>Match</p>
+                        </div>
                         <div class="col">
                             <p>List</p>
                         </div>
@@ -54,28 +66,16 @@
                             <p>chance</p>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="field">
-                                <p class="control">
-                                    <input class="input" type="text" placeholder="Your email" disabled>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col">
-
-                        </div>
-                        <div class="col">
-
+                    <div id="form_addstat">
+                        <div class="row" id="row">
                         </div>
                     </div>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="button is-success" type="submit">Success</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button is-success" type="submit">Success</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -89,14 +89,6 @@
             <div class="row">
                 <div class="col-10">
                     <h1 class="font-block">Player</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-10">
-                </div>
-                <div class="col-2 text-center">
-                    <h1 class="font-block">For coach</h1>
-                    <p><a class="">ADD</a> | <a href="">EDIT</a> </p>
                 </div>
             </div>
         </div>
@@ -120,6 +112,29 @@
 
 </section>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
     $(document).ready(function() {
         getStatistics();
 
@@ -129,7 +144,6 @@
                 url: "/getstatistics",
                 dataType: 'json',
                 success: function(response) {
-                    console.log(response);
                     var len = 0;
                     if (response['player'] != null) {
                         len = response['player'].length;
@@ -166,18 +180,91 @@
             });
         }
 
+
         $(document).on('click', '.addStatistic', function(e) {
             e.preventDefault();
             $('#addStatistics').modal('show');
             let id_m = $(this).val();
-            console.log(id_m);
+            $.ajax({
+                type: "get",
+                url: "/statistics/" + id_m,
+                dataType: 'json',
+                success: function(response) {
+                    const id_match = response['maxid'] + 1;
+                    const position = response['position'];
+                    // console.log(response);
+                    let len = 0;
+                    if (response['list'] != null) {
+                        len = response['list'].length;
+                    }
+                    $('#position').text(position);
+                    $('#id_member').val(id_m);
+                    $('#form_addstat #row').empty();
+                    if (len > 0) {
+                        for (let i = 0; i < len; i++) {
+                            const list = response['list'][i].name_list;
+
+                            const statform = '<div class="col-3">' +
+                                ' <div class="field">' +
+                                '<p class="control">' +
+                                '<input class="input" type="text" name="more[' + i + '][id]" readonly value="' + id_match + '">' +
+                                ' </p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col-3">' +
+                                ' <div class="field">' +
+                                '<p class="control">' +
+                                '<input class="input" type="text" name="more[' + i + '][list]" readonly value="' + list + '">' +
+                                ' </p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col-3">' +
+                                ' <div class="field">' +
+                                '<p class="control">' +
+                                '<input class="input" type="number" name="more[' + i + '][got]" value="0">' +
+                                ' </p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col-3">' +
+                                ' <div class="field">' +
+                                '<p class="control">' +
+                                '<input class="input" type="number" name="more[' + i + '][chance]" value="0">' +
+                                ' </p>' +
+                                '</div>' +
+                                '</div>';
+
+                            $('#form_addstat #row').append(statform);
+                        }
+                    }
+                }
+            });
 
         });
+
+        $('#formAddStat').on('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            $.ajax({
+                url: $(form).attr('action'),
+                method: $(form).attr('method'),
+                data: new FormData(form),
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function(data) {
+                    if (data.code == 0) {
+                        toastr["error"](data.msg);
+                    } else if (data.code == 200) {
+                        toastr["success"](data.msg);
+                    }
+                }
+            })
+        });
+
 
         $(document).on('click', '.myModalaStat', function(e) {
             e.preventDefault();
             var id_m = $(this).val();
-            console.log(id_m);
             $('#myStatisticsModal').modal('show');
             $.ajax({
                 type: "get",

@@ -109,13 +109,25 @@ class MemberController extends Controller
             ->get();
 
         $idMatch = DB::table('statistics')
-            ->where('id_m',$id_m)
+            ->where('id_m', $id_m)
             ->max('id_match');
+
+        $position = DB::table('player')
+            ->where('id_m', $id_m)
+            ->value('position');
+
+        $list = DB::table('list')
+            ->join('position', 'list.id_position', '=', 'position.id_position')
+            ->where('name_position', $position)
+            ->get();
+
 
         if ($statistics) {
             return response()->json([
                 'status' => 200,
-                'maxid'=>$idMatch,
+                'maxid' => $idMatch,
+                'position' => $position,
+                'list' => $list,
                 'statistics' => $statistics,
             ]);
         } else {
@@ -126,22 +138,64 @@ class MemberController extends Controller
         }
     }
 
-    public function getIdMatch($id_m)   
+    public function getIdMatch($id_m)
     {
         $idMatch = DB::table('statistics')
-            ->where('id_m',$id_m)
+            ->where('id_m', $id_m)
             ->max('id_match');
-        
-            if($idMatch){
+
+        if ($idMatch) {
+            return response()->json([
+                'status' => 200,
+                'max_id_match' => $idMatch
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'List not found',
+            ]);
+        }
+    }
+
+    public function addStatistics(Request $request)
+    {
+        $request->validate([
+            'more.*.list' => 'required',
+            'more.*.id' => 'required',
+            'more.*.got' => 'required',
+            'more.*.chance' => 'required',
+            'id_member' => 'required',
+        ]);
+
+        $len  = count($request->more);
+        $statisticsInput = [];
+        for ($i = 0; $i < $len; $i++) {
+            
+            if($request->more[$i]['got'] > $request->more[$i]['chance']){
                 return response()->json([
-                    'status'=>200,
-                    'max_id_match'=>$idMatch
-                ]);
-            }else {
-                return response()->json([
-                    'status' => 404,
-                    'message' => 'List not found',
+                    'code' => 0,
+                    'msg' => '"got" must more than "chance"',
                 ]);
             }
+
+            $statisticsInput[] = [
+                'list' => $request->more[$i]['list'],
+                'got' => $request->more[$i]['got'],
+                'chance' => $request->more[$i]['chance'],
+                'id_match' => $request->more[$i]['id'],
+                'id_m' => $request->id_member,
+            ];
+        }
+        if (count($statisticsInput) > 0) {
+            $queryInsert = DB::table('statistics')
+                ->insert($statisticsInput);
+
+            if ($queryInsert) {
+                return response()->json([
+                    'code' => 200,
+                    'msg' => "Success fully",
+                ]);
+            }
+        }
     }
 }

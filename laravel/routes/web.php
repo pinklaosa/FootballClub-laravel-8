@@ -58,6 +58,7 @@ Route::get('/rivalmember/{id_mr}',[RivalController::class,'statistics']);
 Route::get('/statistics',[MemberController::class,'showStatistics']);
 Route::get('/getstatistics',[MemberController::class,'usStatistics']);
 Route::get('/statistics/{id_m}',[MemberController::class,'detailStatistics']);
+Route::post('/addstatistics',[MemberController::class,'addStatistics'])->name('add.statistics');
 
 Route::get('/analysis',[AnalysisController::class,'pAnalysis']);
 Route::post('/recommend',[AnalysisController::class,'selectedRival'])->name('select.rival');

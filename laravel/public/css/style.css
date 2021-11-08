@@ -25,6 +25,10 @@ div{
 td{
   text-transform: uppercase;
 }
+h5 span{
+  text-transform: uppercase;
+
+}
 .sidebar{
   position: fixed;
   left: 0;
