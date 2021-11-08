@@ -1,0 +1,1 @@
+{{ $LoggedUserInfo->name }} : {{ $LoggedUserInfo->username }}
