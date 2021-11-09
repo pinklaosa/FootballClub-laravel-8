@@ -46,7 +46,7 @@ Route::post('methodRegister',[CustomAuthController::class,'postRegister'])->name
 Route::get('/logout',[CustomAuthController::class,'logout']);
 
 Route::get('/add',[MemberController::class,'addM'])->middleware('isLogged');
-Route::post('/added',[MemberController::class,'addedMember'])->name('added.member');
+Route::post('/added',[MemberController::class,'addedMember'])->name('player.add');
 
 Route::get('/fullcalender', [FullCalenderController::class,'index'])->middleware('isLogged');
 Route::post('fullcalenderAjax', [FullCalenderController::class, 'ajax']);

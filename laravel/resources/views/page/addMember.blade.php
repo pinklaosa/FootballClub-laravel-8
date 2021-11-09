@@ -7,7 +7,7 @@
         <div class="title-block">
             <h1 class="font-block">Form</h1>
         </div>
-        <form action="{{ route('added.member') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('player.add') }}" method="post">
             @csrf
             <section class="section">
                 <div class="container">
@@ -27,45 +27,29 @@
                             <div class="column">
                                 <label class="label has-text-white	">Name</label>
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Name" name="name">
+                                    <input class="input" type="text" placeholder="Name" name="name" id="name" required>
                                 </div>
-                                <span class="has-text-danger">@error('name'){{ $message }} @enderror</span>
                             </div>
                             <div class="column">
                                 <label class="label has-text-white	">Nickname</label>
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Nickname" name="nickname">
+                                    <input class="input" type="text" placeholder="Nickname" name="nickname" id="nickname">
                                 </div>
-                                <span class="has-text-danger">@error('nickname'){{ $message }} @enderror</span>
                             </div>
                         </div>
                     </div>
-                    <div class="field mt-5">
-                        <label class="label has-text-white">Username</label>
-                        <div class="control has-icons-left has-icons-right">
-                            <input class="input is-success" type="text" placeholder="Username" name="username">
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-user"></i>
-                            </span>
-                            <span class="icon is-small is-right">
-                                <i class="fas fa-check"></i>
-                            </span>
-                        </div>
-                        <span class="has-text-danger">@error('username'){{ $message }} @enderror</span>
-                    </div>
-                    <div class="field mt-5">
-                        <div class="columns">
-                            <div class="column is-2">
+                    <div class="row mt-5">
+                        <div class="col-3">
+                            <div class="field" >
                                 <label class="label has-text-white">Position</label>
                                 <div class="control has-icons-left">
                                     <div class="select">
-                                        <select name="position">
-                                            <option>Select position</option>
-                                            <option>โค้ช</option>
-                                            <option>กองหน้า</option>
-                                            <option>กองกลาง</option>
-                                            <option>กองหลัง</option>
-                                            <option>ประตู</option>
+                                        <select name="position" id="position">
+                                            <option value="none">Select position</option>
+                                            <option value="goalkeeper">Goalkeeper</option>
+                                            <option value="defender">Defender</option>
+                                            <option value="midfield">Midfield</option>
+                                            <option value="forward">Forward</option>
                                         </select>
                                     </div>
                                     <div class="icon is-small is-left">
@@ -73,13 +57,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="column is-1 mr-6">
-                                <label class="label has-text-white	">Number</label>
+                        </div>
+                        <div class="col-1">
+                            <div class="field">
+                                <label class="label has-text-white">Number</label>
                                 <div class="control">
-                                    <input class="input" type="number" name="number">
+                                    <input class="input" type="number" name="number" id="number">
                                 </div>
                             </div>
-                            <div class="column is-2">
+                        </div>
+                        <div class="col-2">
+                            <div class="field">
                                 <label class="label has-text-white">Status</label>
                                 <div class="control">
                                     <div class="select">
@@ -90,30 +78,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="column">
+                        </div>
+                        <div class="col">
+                            <div class="field">
                                 <label class="label has-text-white">Picture</label>
-                                <!-- <div class="file is-info has-name">
-                                    <label class="file-label">
-                                        <input class="file-input" type="file" name="photo" id="photo">
-                                        <span class="file-cta">
-                                            <span class="file-icon">
-                                                <i class="fas fa-upload"></i>
-                                            </span>
-                                            <span class="file-label">
-                                                Upload
-                                            </span>
-                                        </span>
-                                        <span class="file-name has-text-white">
-                                            Screen Shot 2017-07-29 at 15.54.25.png
-                                        </span>
-                                    </label>
-                                </div> -->
-                                
-                                <input class="form-control" type="file" name="photo" id="formFile">
+                                <input class="form-control" type="file" name="photo">
                             </div>
                         </div>
                     </div>
-
                     <div class="field is-grouped mt-6">
                         <div class="control">
                             <button class="button is-link" type="submit">Submit</button>

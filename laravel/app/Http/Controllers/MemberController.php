@@ -27,7 +27,6 @@ class MemberController extends Controller
         $request->validate([
             'name' => 'required',
             'nickname' => 'required',
-            'username' => 'required',
             'position' => 'required',
             'number' => 'required',
             'status' => 'required',
@@ -35,27 +34,32 @@ class MemberController extends Controller
         ]);
 
         if ($img = $request->file('photo')) {
-            $path = 'assets/img/';
-            $imgName = $request->name . '.jpg';
+            $path = 'assets/img/profile/';
+            $imgName = $request->name . '.png';
             $img->move($path, $imgName);
             $photo = "$imgName";
         }
 
-        $query = DB::table('user_details')
+        $query = DB::table('player')
             ->insert([
                 'name' => $request->name,
-                'nickname' => $request->nickname,
-                'username' => $request->username,
                 'position' => $request->position,
+                'nickname' => $request->nickname,
                 'number' => $request->number,
+                'photo' => $photo,
                 'status' => $request->status,
-                'photo' => $photo
             ]);
 
         if ($query) {
-            return back()->with('added', 'Member added successfully');
+            return response()->json([
+                'code' => 200,
+                'msg' => "Success fully",
+            ]);
         } else {
-            return back()->with('error', 'Something wrong');
+            return response()->json([
+                'code' => 0,
+                'msg' => "Something went wrong",
+            ]);
         }
     }
 
@@ -72,7 +76,7 @@ class MemberController extends Controller
             ];
 
             $data = array(
-                'list' => DB::table('user_details')->get()
+                'list' => DB::table('player')->get()
             );
         }
         return view('page.member', $data, $name);
@@ -170,8 +174,8 @@ class MemberController extends Controller
         $len  = count($request->more);
         $statisticsInput = [];
         for ($i = 0; $i < $len; $i++) {
-            
-            if($request->more[$i]['got'] > $request->more[$i]['chance']){
+
+            if ($request->more[$i]['got'] > $request->more[$i]['chance']) {
                 return response()->json([
                     'code' => 0,
                     'msg' => '"got" must more than "chance"',
