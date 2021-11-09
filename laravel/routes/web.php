@@ -58,6 +58,8 @@ Route::get('/rivalmember/{id_mr}',[RivalController::class,'statistics']);
 Route::post('/addrivalteam',[RivalController::class,'addRivalTeam'])->name('rival.addteam');
 Route::post('/addrivalmember',[RivalController::class,'addRivalMember'])->name('member.addrival');
 Route::post('/addstatrivalmember',[RivalController::class,'addStatRivalMember'])->name('stat.addmember');
+Route::post('/editrivalmember',[RivalController::class,'editRivalMember'])->name('edit.rivalmember');
+Route::get('/deletedmember/{id_mr}',[RivalController::class,'deletedMember']);
 
 Route::get('/statistics',[MemberController::class,'showStatistics']);
 Route::get('/getstatistics',[MemberController::class,'usStatistics']);

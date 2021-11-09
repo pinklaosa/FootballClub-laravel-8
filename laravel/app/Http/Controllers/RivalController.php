@@ -99,10 +99,15 @@ class RivalController extends Controller
             ->join('position', 'list.id_position', '=', 'position.id_position')
             ->where('name_position', $position)
             ->get();
+        
+        $data = DB::table('member_rival')
+            ->where('id_mr',$id_mr)
+            ->get();
 
         if ($staList) {
             return response()->json([
                 'status' => 200,
+                'data' => $data,
                 'maxid' => $idMatch,
                 'position' => $position,
                 'list' => $list,
@@ -192,5 +197,55 @@ class RivalController extends Controller
             }
         }
 
+    }
+
+    public function editRivalMember(Request $request)
+    {
+        $request->validate([
+            'edit_id_rival'=>'required',
+            'edit_id_mr'=>'required',
+            'edit_name_mr'=>'required',
+            'edit_position_mr'=>'required',
+        ]);
+        
+        $update = DB::table('member_rival')
+            ->where('id_rival',$request->edit_id_rival)
+            ->where('id_mr',$request->edit_id_mr)
+            ->update([
+                'name_mr'=>$request->edit_name_mr,
+                'position_mr'=>$request->edit_position_mr,
+            ]);
+        
+            if($update){
+                return response()->json([
+                    'code'=>200,
+                    'msg'=>'Updated successfully'
+                ]);
+            }else{
+                return response()->json([
+                    'code'=>0,
+                    'msg'=>'Something went wrong'
+                ]);
+            }
+    }
+
+    public function deletedMember($id_mr)
+    {
+        $deleted = DB::table('member_rival')
+            ->where('id_mr',$id_mr)
+            ->delete();
+
+        if($deleted){
+            return response()->json([
+                'code'=>200,
+                'msg'=>'The record had deleted.'
+            ]);
+        }    
+        else{
+            return response()->json([
+                'code'=>0,
+                'msg'=>'Something went wrong.'
+            ]);
+        }
     }
 }

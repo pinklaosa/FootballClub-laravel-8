@@ -1,7 +1,7 @@
 @extends('page.pageMain')
 @section('title','Rival members')
 @section('modal')
-<!-- Modal -->
+<!-- Modal Statistics-->
 <div class="modal fade" id="statisticsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -31,7 +31,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Add member-->
 <div class="modal fade" id="addMemberRivalModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -88,7 +88,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Add member statistics-->
 <div class="modal fade" id="addStatisticsRival" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -148,6 +148,91 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Edit member-->
+<div class="modal fade" id="editmemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form action="{{ route('edit.rivalmember') }}" method="post" id="formEditMember">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <h5> EDIT </h5>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-1">
+                            <div class="field">
+                                <label class="label">Team</label>
+                                <div class="control">
+                                    <input class="input" type="text" value="{{ $id_rival }}" name="edit_id_rival" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="field">
+                                <label class="label">ID</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="edit_id_mr" id="id_mr" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="field">
+                                <label class="label">Name</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="edit_name_mr" id="name_mr" placeholder="Name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="field">
+                                <label class="label">Position</label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select name="edit_position_mr" id="position_mr">
+                                            <option value="none">Select position</option>
+                                            <option value="goalkeeper">Goalkeeper</option>
+                                            <option value="defender">Defender</option>
+                                            <option value="midfield">Midfield</option>
+                                            <option value="forward">Forward</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button is-success" type="submit">Success</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure for delete this player ?
+            </div>
+            <div class="modal-footer">
+                <button class="button is-danger deletedMember">Delete</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @stop
 
 @section('body')
@@ -191,6 +276,7 @@
                         <th class="has-text-white-bis">Profile</th>
                         <th class="has-text-white-bis">Position</th>
                         <th class="has-text-white-bis" style="text-align: center;">Statistics</th>
+                        <th class="has-text-white-bis text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -208,6 +294,12 @@
                         <td style="text-align: center;">
                             <button class='button is-primary addStatisticRival' value='{{ $item->id_mr }}'>ADD</button>
                             <button type="button" class="myModala button is-ghost is-inverted" value="{{ $item->id_mr }}">DETAILS</button>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-primary editmember" value='{{ $item->id_mr }}'>EDIT</button>
+                                <button type="button" class="btn btn-danger deletemember" value='{{ $item->id_mr }}'>DELETE</button>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
@@ -235,7 +327,72 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
+    //edit member
     $(document).ready(function() {
+        $(document).on('click','.deletemember',function(e){
+            e.preventDefault();
+            $('#deleteModal').modal('show');
+            let id_mr = $(this).val();
+            $(document).on('click','.deletedMember',function(e){
+                $.ajax({
+                    method: 'get',
+                    url:'/deletedmember/'+id_mr,
+                    dataType: 'json',
+                    success: function(response){
+                        if(response.code == 200){
+                            toastr["success"](response.msg);
+                            $('#deleteModal').modal('hide');
+                        }else{
+                            toastr["error"](response.msg);
+                        }
+                    }
+                })
+            });
+        });
+
+
+        $(document).on('click', '.editmember', function(e) {
+            e.preventDefault();
+            $('#editmemberModal').modal('show');
+            let id_mr = $(this).val();
+            $('#id_mr').val(id_mr);
+            $.ajax({
+                type: "GET",
+                url: "/rivalmember/" + id_mr,
+                dataType: 'json',
+                success: function(response) {
+                    const name_mr = response['data'][0].name_mr;
+                    const position_mr = response['data'][0].position_mr;
+                    $('#name_mr').val(name_mr);
+                    $('#position_mr').val(position_mr);
+                }
+            })
+        });
+
+        $('#formEditMember').on('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            $.ajax({
+                url: $(form).attr('action'),
+                method: $(form).attr('method'),
+                data: new FormData(form),
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function(data) {
+                    if (data.code == 0) {
+                        toastr["error"](data.msg);
+                    } else if (data.code == 200) {
+                        toastr["success"](data.msg);
+                        $('#editmemberModal').modal('hide'); 
+                    }
+                }
+            })
+        });
+
+
+
+
         $(document).on('click', '.addStatisticRival', function(e) {
             e.preventDefault();
             $('#addStatisticsRival').modal('show');
@@ -317,10 +474,17 @@
             })
         });
 
-
         $(document).on('click', '.addMemberRival', function(e) {
             e.preventDefault();
             $('#addMemberRivalModal').modal('show');
+            $.ajax({
+                url: $(form).attr('action'),
+                method: $(form).attr('method'),
+                data: new FormData(form),
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+            })
         });
 
         $(document).on('click', '.myModala', function(e) {
