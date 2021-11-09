@@ -236,86 +236,86 @@
         "hideMethod": "fadeOut"
     }
     $(document).ready(function() {
-        // $(document).on('click', '.addStatisticRival', function(e) {
-        //     e.preventDefault();
-        //     $('#addStatisticsRival').modal('show');
-        //     let id_mr = $(this).val();
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "/rivalmember/" + id_mr,
-        //         dataType: 'json',
-        //         success: function(response) {
-        //             const id_match = response['maxid'] + 1;
-        //             const position = response['position'];
-        //             // console.log(response);
-        //             let len = 0;
-        //             if (response['list'] != null) {
-        //                 len = response['list'].length;
-        //             }
-        //             $('#position').text(position);
-        //             $('#id_member').val(id_mr);
-        //             $('#form_addstat #row').empty();
-        //             if (len > 0) {
-        //                 for (let i = 0; i < len; i++) {
-        //                     const list = response['list'][i].name_list;
+        $(document).on('click', '.addStatisticRival', function(e) {
+            e.preventDefault();
+            $('#addStatisticsRival').modal('show');
+            let id_mr = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "/rivalmember/" + id_mr,
+                dataType: 'json',
+                success: function(response) {
+                    const id_match = response['maxid'] + 1;
+                    const position = response['position'];
+                    // console.log(response);
+                    let len = 0;
+                    if (response['list'] != null) {
+                        len = response['list'].length;
+                    }
+                    $('#position').text(position);
+                    $('#id_member').val(id_mr);
+                    $('#form_addstat #row').empty();
+                    if (len > 0) {
+                        for (let i = 0; i < len; i++) {
+                            const list = response['list'][i].name_list;
 
-        //                     const statform = '<div class="col-1"></div>' +
-        //                         '<div class="col-2">' +
-        //                         ' <div class="field">' +
-        //                         '<p class="control">' +
-        //                         '<input class="form-control-plaintext" type="text" name="more[' + i + '][id]" readonly value="' + id_match + '">' +
-        //                         ' </p>' +
-        //                         '</div>' +
-        //                         '</div>' +
-        //                         '<div class="col-5">' +
-        //                         ' <div class="field">' +
-        //                         '<p class="control">' +
-        //                         '<input class="form-control-plaintext" type="text" name="more[' + i + '][list]" readonly value="' + list + '">' +
-        //                         ' </p>' +
-        //                         '</div>' +
-        //                         '</div>' +
-        //                         '<div class="col-2">' +
-        //                         ' <div class="field">' +
-        //                         '<p class="control">' +
-        //                         '<input class="input" type="number" name="more[' + i + '][got]" value="0">' +
-        //                         ' </p>' +
-        //                         '</div>' +
-        //                         '</div>' +
-        //                         '<div class="col-2">' +
-        //                         ' <div class="field">' +
-        //                         '<p class="control">' +
-        //                         '<input class="input" type="number" name="more[' + i + '][chance]" value="0">' +
-        //                         ' </p>' +
-        //                         '</div>' +
-        //                         '</div>';
+                            const statform = '<div class="col-1"></div>' +
+                                '<div class="col-2">' +
+                                ' <div class="field">' +
+                                '<p class="control">' +
+                                '<input class="form-control-plaintext" type="text" name="more[' + i + '][id]" readonly value="' + id_match + '">' +
+                                ' </p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col-5">' +
+                                ' <div class="field">' +
+                                '<p class="control">' +
+                                '<input class="form-control-plaintext" type="text" name="more[' + i + '][list]" readonly value="' + list + '">' +
+                                ' </p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col-2">' +
+                                ' <div class="field">' +
+                                '<p class="control">' +
+                                '<input class="input" type="number" name="more[' + i + '][got]" value="0">' +
+                                ' </p>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="col-2">' +
+                                ' <div class="field">' +
+                                '<p class="control">' +
+                                '<input class="input" type="number" name="more[' + i + '][chance]" value="0">' +
+                                ' </p>' +
+                                '</div>' +
+                                '</div>';
 
-        //                     $('#form_addstat #row').append(statform);
-        //                 }
-        //             }
-        //         }
-        //     });
-        // });
+                            $('#form_addstat #row').append(statform);
+                        }
+                    }
+                }
+            });
+        });
 
-        // $('#formAddStat').on('submit', function(e) {
-        //     e.preventDefault();
-        //     const form = this;
-        //     $.ajax({
-        //         url: $(form).attr('action'),
-        //         method: $(form).attr('method'),
-        //         data: new FormData(form),
-        //         processData: false,
-        //         dataType: 'json',
-        //         contentType: false,
-        //         success: function(data) {
-        //             if (data.code == 0) {
-        //                 alert(data.msg);
-        //             } else if (data.code == 200) {
-        //                 alert(data.msg);
-        //                 $('#addStatisticsRival').modal('hide');
-        //             }
-        //         }
-        //     })
-        // });
+        $('#formAddStatRival').on('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            $.ajax({
+                url: $(form).attr('action'),
+                method: $(form).attr('method'),
+                data: new FormData(form),
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function(data) {
+                    if (data.code == 0) {
+                        toastr["error"](data.msg);
+                    } else if (data.code == 200) {
+                        toastr["success"](data.msg);
+                        $('#addStatisticsRival').modal('hide');
+                    }
+                }
+            })
+        });
 
 
         $(document).on('click', '.addMemberRival', function(e) {

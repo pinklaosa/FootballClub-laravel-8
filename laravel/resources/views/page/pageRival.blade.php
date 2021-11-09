@@ -5,7 +5,7 @@
 <div class="modal fade modal-z" id="addTeamRivalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{ route('rival.addteam') }}" method="post" id="formAddRival">
+            <form action="{{ route('rival.addteam') }}" method="post" id="formAddRivalTeam">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Add Rival's team</h5>
@@ -48,12 +48,19 @@
                 </div>
                 <div class="col-2 text-center">
                     <h1 class="font-block">For coach</h1>
-                    <p><a class="addTeamRival">ADD</a> | <a href="">EDIT</a> </p>
+                    <p>
+                        <button class="button is-ghost is-light addTeamRival">
+                            <span class="icon">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                            <span>ADD TEAM</span>
+                        </button>
+                    </p>
                 </div>
             </div>
         </div>
         <section class="section" id="rival_team">
-            <div class="row"></div>
+            <div class="row" id="row"></div>
         </section>
 
     </div>
@@ -111,14 +118,14 @@
                                 '</div>' +
                                 '</div>';
 
-                            $('#rival_team .row').append(showTeam);
+                            $('#rival_team #row').append(showTeam);
                         }
                     }
                 }
             });
         }
 
-        $('#formAddRival').on('submit', function(e) {
+        $('#formAddRivalTeam').on('submit', function(e) {
             e.preventDefault();
             const form = this;
             $.ajax({
