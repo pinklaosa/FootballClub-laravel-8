@@ -336,7 +336,7 @@ h5 span{
 .card {
   box-shadow: 0 4px 8px 0 rgb(255, 255, 255);
   transition: 0.3s;
-  width: 20%;
+  width: 100%;
   border-radius: 5px;
 }
 

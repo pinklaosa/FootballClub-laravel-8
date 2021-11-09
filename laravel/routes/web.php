@@ -55,7 +55,9 @@ Route::get('/rival',[RivalController::class,'rival'])->middleware('isLogged');
 Route::get('/getrivalteam',[RivalController::class,'getRiavalTeam']);
 Route::get('/rivalmember',[RivalController::class,'rivalMembers']);
 Route::get('/rivalmember/{id_mr}',[RivalController::class,'statistics']);
-Route::post('/addrivalteam',[RivalController::class,'addRivalTeam'])->name('add.rival');
+Route::post('/addrivalteam',[RivalController::class,'addRivalTeam'])->name('rival.addteam');
+Route::post('/addrivalmember',[RivalController::class,'addRivalMember'])->name('member.addrival');
+Route::post('/addstatrivalmember',[RivalController::class,'addStatRivalMember'])->name('stat.addmember');
 
 Route::get('/statistics',[MemberController::class,'showStatistics']);
 Route::get('/getstatistics',[MemberController::class,'usStatistics']);

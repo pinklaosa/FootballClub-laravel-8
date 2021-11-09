@@ -5,30 +5,30 @@
 <div class="modal fade modal-z" id="addTeamRivalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <form action="" method="post" id="formAddRival">
+            <form action="{{ route('rival.addteam') }}" method="post" id="formAddRival">
+                @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Add Rival's team</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                     <div class="row">
                         <div class="col">
                             <div class="field">
                                 <label class="label">Name</label>
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Team Name">
+                                    <input class="input" type="text" placeholder="Team Name" name="rivalteam_name" required>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
                             <label for="formFile" class="form-label">Logo team</label>
-                            <input class="form-control" type="file" id="formFile">
+                            <input class="form-control" type="file" id="formFile" name="photo_rival">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="button is-success" data-bs-dismiss="modal">Submit</button>
+                    <button type="submit" class="button is-success">Submit</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -53,12 +53,31 @@
             </div>
         </div>
         <section class="section" id="rival_team">
+            <div class="row"></div>
         </section>
 
     </div>
 </section>
 
 <script>
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
     $(document).ready(function() {
         getRivalTeam();
 
@@ -80,7 +99,8 @@
                             const id_rival = response['rival'][index].id_rival;
                             const name = response['rival'][index].name_rival;
 
-                            const showTeam = '<div class="card">' +
+                            const showTeam = '<div class="col-3">' +
+                                '<div class="card">' +
                                 '<img src="assets/img/rival/' + photo + '" alt="Avatar" style="width:100%">' +
                                 ' <div class="container">' +
                                 '<a href="rivalmember?id_rival=' + id_rival + '">' +
@@ -88,19 +108,15 @@
                                 '</a>' +
                                 '<p>Team</p>' +
                                 '</div>' +
+                                '</div>' +
                                 '</div>';
 
-                            $('#rival_team').append(showTeam);
+                            $('#rival_team .row').append(showTeam);
                         }
                     }
                 }
             });
         }
-
-        $(document).on('click', '.addTeamRival', function(e) {
-            e.preventDefault();
-            $('#addTeamRivalModal').modal('show');
-        });
 
         $('#formAddRival').on('submit', function(e) {
             e.preventDefault();
@@ -113,15 +129,21 @@
                 dataType: 'json',
                 contentType: false,
                 success: function(data) {
-                    if (data.code == 0) {
+                    if (data.status == 0) {
                         toastr["error"](data.msg);
-                    } else if (data.code == 200) {
+                    } else {
                         toastr["success"](data.msg);
-                        $('#addStatistics').modal('hide');
+                        $('#addTeamRivalModal').modal('hide');
                     }
                 }
-            })
+            });
         });
+
+        $(document).on('click', '.addTeamRival', function(e) {
+            e.preventDefault();
+            $('#addTeamRivalModal').modal('show');
+        });
+
 
     });
 </script>
