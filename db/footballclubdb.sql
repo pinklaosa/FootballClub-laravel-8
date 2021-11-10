@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2021 at 12:23 PM
+-- Generation Time: Nov 10, 2021 at 03:22 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -42,7 +42,43 @@ CREATE TABLE `events` (
 
 INSERT INTO `events` (`id`, `title`, `start`, `end`, `created_at`, `updated_at`) VALUES
 (7, 'แข่ง', '2021-09-16', '2021-09-17', '2021-09-06 05:38:39', '2021-09-06 05:38:39'),
-(9, 'ซ้อม เวลา 12.00', '2021-09-09', '2021-09-10', '2021-09-06 05:41:10', '2021-09-06 05:41:10');
+(9, 'ซ้อม เวลา 12.00', '2021-09-09', '2021-09-10', '2021-09-06 05:41:10', '2021-09-06 05:41:10'),
+(13, 'Test', '2021-11-12', '2021-11-13', '2021-11-10 01:18:12', '2021-11-10 04:53:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `list`
+--
+
+CREATE TABLE `list` (
+  `id_list` int(11) NOT NULL,
+  `name_list` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id_position` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `list`
+--
+
+INSERT INTO `list` (`id_list`, `name_list`, `id_position`) VALUES
+(1, 'Save', 1),
+(2, 'Passing', 1),
+(3, 'Save Penalty', 1),
+(4, 'Duel 1-1', 1),
+(5, 'Passing', 2),
+(6, 'Intercept', 2),
+(7, 'Heading', 2),
+(8, 'Tackle', 2),
+(9, 'Passing', 3),
+(10, 'Dribbling', 3),
+(11, 'Intercept', 3),
+(12, 'Shooting', 3),
+(13, 'Heading', 3),
+(14, 'Passing', 4),
+(15, 'Shooting', 4),
+(16, 'Heading', 4),
+(17, 'Dribbling', 4);
 
 -- --------------------------------------------------------
 
@@ -62,7 +98,7 @@ CREATE TABLE `member_rival` (
 --
 
 INSERT INTO `member_rival` (`id_mr`, `name_mr`, `position_mr`, `id_rival`) VALUES
-(1, 'กวินทร์ ธรรมสัจจานันท์  ', 'goalkeeper', 1),
+(1, 'กวินทร์ ธรรมสัจจานันท์', 'goalkeeper', 1),
 (2, 'นฤบดินทร์ วีรวัฒโนดม', 'defender', 1),
 (3, 'พรรษา เหมวิบูลย์', 'defender', 1),
 (4, 'ธนบูรณ์ เกศารัตน์', 'defender', 1),
@@ -123,37 +159,62 @@ CREATE TABLE `personal_access_tokens` (
 CREATE TABLE `player` (
   `id_m` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `position` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL
+  `position` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nickname` varchar(30) COLLATE utf8_unicode_ci DEFAULT 'nickname',
+  `number` varchar(30) COLLATE utf8_unicode_ci DEFAULT '0',
+  `photo` varchar(300) COLLATE utf8_unicode_ci DEFAULT 'none.png',
+  `status` varchar(10) COLLATE utf8_unicode_ci DEFAULT 'ready'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `player`
 --
 
-INSERT INTO `player` (`id_m`, `name`, `position`) VALUES
-(1, 'พินโญ สัมฤทธิ์', 'goalkeeper'),
-(2, 'จามรวุฒิ แก้วจรูญ', 'goalkeeper'),
-(3, 'นพรัตน์ วงษา', 'defender'),
-(4, 'เถกิงศักดิ์ ดำรงมั่น', 'defender'),
-(5, 'ชัยชนะ เจริญสิทธิ์', 'defender'),
-(6, 'ศิวะ กรนุ่ม', 'defender'),
-(7, 'ณัชพล มีทุม', 'midfield'),
-(8, 'จิราเจต พ่วงรอด', 'midfield'),
-(9, 'เฉลิมชัย วงษ์พันเสือ', 'midfield'),
-(10, 'พงศธร พยัคเกษมโสภณ', 'forward'),
-(11, 'ศรราม ม่วงหมี', 'forward'),
-(12, 'ธนากร ตุ้มทอง', 'forward'),
-(13, 'นวพล ศรีเวียงธวัช', 'goalkeeper'),
-(14, 'ณัฐวัตร นามเจริญ', 'goalkeeper'),
-(15, 'สุทธิราช ป้อมสุวรรณ', 'defender'),
-(16, 'ณัฐชนน เทศมงคล', 'defender'),
-(17, 'ทิยะ ปานะดิษฐ', 'defender'),
-(18, 'ธีรภาพ ฮวดเจริญ', 'midfield'),
-(19, 'สรวิชญ์ ขันอาสา', 'midfield'),
-(20, 'ศักดินา ศรีราม', 'midfield'),
-(21, 'ทศพร จันทรทักษิณ', 'Forward'),
-(22, 'ธนานันท์ วอนเพียร', 'Forward'),
-(23, 'พงศ์พันธ์ เดชวงศ์ญา', 'Forward');
+INSERT INTO `player` (`id_m`, `name`, `position`, `nickname`, `number`, `photo`, `status`) VALUES
+(1, 'พินโญ สัมฤทธิ์', 'goalkeeper', 'เพชร', '99', 'พินโญ สัมฤทธิ์.png', 'ready'),
+(2, 'จามรวุฒิ แก้วจรูญ', 'goalkeeper', 'nickname', '0', 'none.png', 'ready'),
+(3, 'นพรัตน์ วงษา', 'defender', 'nickname', '0', 'none.png', 'ready'),
+(4, 'เถกิงศักดิ์ ดำรงมั่น', 'defender', 'nickname', '0', 'none.png', 'ready'),
+(5, 'ชัยชนะ เจริญสิทธิ์', 'defender', 'nickname', '0', 'none.png', 'ready'),
+(6, 'ศิวะ กรนุ่ม', 'defender', 'nickname', '0', 'none.png', 'ready'),
+(7, 'ณัชพล มีทุม', 'midfield', 'nickname', '0', 'none.png', 'ready'),
+(8, 'จิราเจต พ่วงรอด', 'midfield', 'nickname', '0', 'none.png', 'ready'),
+(9, 'เฉลิมชัย วงษ์พันเสือ', 'midfield', 'nickname', '0', 'none.png', 'ready'),
+(10, 'พงศธร พยัคเกษมโสภณ', 'forward', 'nickname', '0', 'none.png', 'ready'),
+(11, 'ศรราม ม่วงหมี', 'forward', 'nickname', '0', 'none.png', 'ready'),
+(12, 'ธนากร ตุ้มทอง', 'forward', 'nickname', '0', 'none.png', 'ready'),
+(13, 'นวพล ศรีเวียงธวัช', 'goalkeeper', 'nickname', '0', 'none.png', 'ready'),
+(14, 'ณัฐวัตร นามเจริญ', 'goalkeeper', 'nickname', '0', 'none.png', 'ready'),
+(15, 'สุทธิราช ป้อมสุวรรณ', 'defender', 'nickname', '0', 'none.png', 'ready'),
+(16, 'ณัฐชนน เทศมงคล', 'defender', 'nickname', '0', 'none.png', 'ready'),
+(17, 'ทิยะ ปานะดิษฐ', 'defender', 'nickname', '0', 'none.png', 'ready'),
+(18, 'ธีรภาพ ฮวดเจริญ', 'midfield', 'nickname', '0', 'none.png', 'ready'),
+(19, 'สรวิชญ์ ขันอาสา', 'midfield', 'nickname', '0', 'none.png', 'ready'),
+(20, 'ศักดินา ศรีราม', 'midfield', 'nickname', '0', 'none.png', 'ready'),
+(21, 'ทศพร จันทรทักษิณ', 'Forward', 'nickname', '0', 'none.png', 'ready'),
+(22, 'ธนานันท์ วอนเพียร', 'Forward', 'nickname', '0', 'none.png', 'ready'),
+(23, 'พงศ์พันธ์ เดชวงศ์ญา', 'Forward', 'nickname', '0', 'none.png', 'ready');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `position`
+--
+
+CREATE TABLE `position` (
+  `id_position` int(11) NOT NULL,
+  `name_position` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `position`
+--
+
+INSERT INTO `position` (`id_position`, `name_position`) VALUES
+(1, 'goalkeeper'),
+(2, 'defender'),
+(3, 'midfield'),
+(4, 'forward');
 
 -- --------------------------------------------------------
 
@@ -164,7 +225,7 @@ INSERT INTO `player` (`id_m`, `name`, `position`) VALUES
 CREATE TABLE `rival` (
   `id_rival` int(11) NOT NULL,
   `name_rival` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `photo_rival` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL
+  `photo_rival` varchar(50) COLLATE utf8_unicode_ci DEFAULT 'none.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -186,7 +247,6 @@ CREATE TABLE `statistics` (
   `got` int(11) DEFAULT NULL,
   `chance` int(11) DEFAULT NULL,
   `id_match` int(11) DEFAULT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_m` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -194,203 +254,203 @@ CREATE TABLE `statistics` (
 -- Dumping data for table `statistics`
 --
 
-INSERT INTO `statistics` (`id_sta`, `list`, `got`, `chance`, `id_match`, `name`, `id_m`) VALUES
-(1, 'Save', 3, 5, 1, 'พินโญ สัมฤทธิ์', 1),
-(2, 'Passing', 5, 11, 1, 'พินโญ สัมฤทธิ์', 1),
-(3, 'Save Penalty', 0, 1, 1, 'พินโญ สัมฤทธิ์', 1),
-(4, 'Duel 1-1', 0, 1, 1, 'พินโญ สัมฤทธิ์', 1),
-(5, 'Save', 5, 5, 1, 'จามรวุฒิ แก้วจรูญ', 2),
-(6, 'Passing', 11, 11, 1, 'จามรวุฒิ แก้วจรูญ', 2),
-(7, 'Save Penalty', 1, 1, 1, 'จามรวุฒิ แก้วจรูญ', 2),
-(8, 'Duel 1-1', 3, 3, 1, 'จามรวุฒิ แก้วจรูญ', 2),
-(9, 'Passing', 18, 25, 1, 'นพรัตน์ วงษา', 3),
-(10, 'Intercept', 3, 5, 1, 'นพรัตน์ วงษา', 3),
-(11, 'Heading', 6, 6, 1, 'นพรัตน์ วงษา', 3),
-(12, 'Tackle', 5, 5, 1, 'นพรัตน์ วงษา', 3),
-(13, 'Passing', 28, 28, 1, 'เถกิงศักดิ์ ดำรงมั่น', 4),
-(14, 'Intercept', 7, 7, 1, 'เถกิงศักดิ์ ดำรงมั่น', 4),
-(15, 'Heading', 17, 17, 1, 'เถกิงศักดิ์ ดำรงมั่น', 4),
-(16, 'Tackle', 4, 4, 1, 'เถกิงศักดิ์ ดำรงมั่น', 4),
-(17, 'Passing', 17, 35, 1, 'ชัยชนะ เจริญสิทธิ์', 5),
-(18, 'Intercept', 2, 6, 1, 'ชัยชนะ เจริญสิทธิ์', 5),
-(19, 'Heading', 0, 9, 1, 'ชัยชนะ เจริญสิทธิ์', 5),
-(20, 'Tackle', 4, 6, 1, 'ชัยชนะ เจริญสิทธิ์', 5),
-(21, 'Passing', 20, 34, 1, 'ศิวะ กรนุ่ม', 6),
-(22, 'Intercept', 4, 4, 1, 'ศิวะ กรนุ่ม', 6),
-(23, 'Heading', 1, 5, 1, 'ศิวะ กรนุ่ม', 6),
-(24, 'Tackle', 3, 5, 1, 'ศิวะ กรนุ่ม', 6),
-(25, 'Passing', 35, 35, 1, 'ณัชพล มีทุม', 7),
-(26, 'Dribbling', 5, 6, 1, 'ณัชพล มีทุม', 7),
-(27, 'Intercept', 5, 5, 1, 'ณัชพล มีทุม', 7),
-(28, 'Shooting', 1, 1, 1, 'ณัชพล มีทุม', 7),
-(29, 'Heading', 2, 6, 1, 'ณัชพล มีทุม', 7),
-(30, 'Passing', 29, 34, 1, 'จิราเจต พ่วงรอด', 8),
-(31, 'Dribbling', 7, 9, 1, 'จิราเจต พ่วงรอด', 8),
-(32, 'Intercept', 3, 4, 1, 'จิราเจต พ่วงรอด', 8),
-(33, 'Shooting', 3, 3, 1, 'จิราเจต พ่วงรอด', 8),
-(34, 'Heading', 5, 6, 1, 'จิราเจต พ่วงรอด', 8),
-(35, 'Passing', 33, 40, 1, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(36, 'Dribbling', 5, 7, 1, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(37, 'Intercept', 2, 4, 1, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(38, 'Shooting', 1, 5, 1, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(39, 'Heading', 1, 3, 1, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(40, 'Passing', 20, 30, 1, 'พงศธร พยัคเกษมโสภณ', 10),
-(41, 'Shooting', 2, 5, 1, 'พงศธร พยัคเกษมโสภณ', 10),
-(42, 'Heading', 2, 4, 1, 'พงศธร พยัคเกษมโสภณ', 10),
-(43, 'Dribbling', 6, 10, 1, 'พงศธร พยัคเกษมโสภณ', 10),
-(44, ' Passing', 18, 20, 1, 'ศรราม ม่วงหมี', 11),
-(45, 'Shooting', 0, 5, 1, 'ศรราม ม่วงหมี', 11),
-(46, 'Heading', 9, 14, 1, 'ศรราม ม่วงหมี', 11),
-(47, 'Dribbling', 3, 6, 1, 'ศรราม ม่วงหมี', 11),
-(48, 'Passing', 16, 25, 1, 'ธนากร ตุ้มทอง', 12),
-(49, 'Shooting', 3, 3, 1, 'ธนากร ตุ้มทอง', 12),
-(50, 'Heading', 2, 3, 1, 'ธนากร ตุ้มทอง', 12),
-(51, 'Dribbling', 10, 12, 1, 'ธนากร ตุ้มทอง', 12),
-(52, 'Save', 3, 3, 2, 'พินโญ สัมฤทธิ์', 1),
-(53, 'Passing', 7, 10, 2, 'พินโญ สัมฤทธิ์', 1),
-(54, 'Save Penalty', 0, 1, 2, 'พินโญ สัมฤทธิ์', 1),
-(55, 'Duel 1-1', 1, 2, 2, 'พินโญ สัมฤทธิ์', 1),
-(56, 'Save', 3, 3, 2, 'จามรวุฒิ แก้วจรูญ', 2),
-(57, 'Passing', 7, 8, 2, 'จามรวุฒิ แก้วจรูญ', 2),
-(58, 'Save Penalty', 1, 1, 2, 'จามรวุฒิ แก้วจรูญ', 2),
-(59, 'Duel 1-1', 2, 2, 2, 'จามรวุฒิ แก้วจรูญ', 2),
-(60, 'Passing', 22, 24, 2, 'นพรัตน์ วงษา', 3),
-(61, 'Intercept', 5, 6, 2, 'นพรัตน์ วงษา', 3),
-(62, 'Heading', 3, 3, 2, 'นพรัตน์ วงษา', 3),
-(63, 'Tackle', 4, 5, 2, 'นพรัตน์ วงษา', 3),
-(64, 'Passing', 27, 27, 2, 'เถกิงศักดิ์ ดำรงมั่น', 4),
-(65, 'Intercept', 2, 5, 2, 'เถกิงศักดิ์ ดำรงมั่น', 4),
-(66, 'Heading', 15, 16, 2, 'เถกิงศักดิ์ ดำรงมั่น', 4),
-(67, 'Tackle', 3, 3, 2, 'เถกิงศักดิ์ ดำรงมั่น', 4),
-(68, 'Passing', 38, 38, 2, 'ชัยชนะ เจริญสิทธิ์', 5),
-(69, 'Intercept', 5, 6, 2, 'ชัยชนะ เจริญสิทธิ์', 5),
-(70, 'Heading', 6, 8, 2, 'ชัยชนะ เจริญสิทธิ์', 5),
-(71, 'Tackle', 1, 5, 2, 'ชัยชนะ เจริญสิทธิ์', 5),
-(72, 'Passing', 32, 39, 2, 'ศิวะ กรนุ่ม', 6),
-(73, 'Intercept', 4, 4, 2, 'ศิวะ กรนุ่ม', 6),
-(74, 'Heading', 2, 3, 2, 'ศิวะ กรนุ่ม', 6),
-(75, 'Tackle', 4, 5, 2, 'ศิวะ กรนุ่ม', 6),
-(76, 'Passing', 40, 42, 2, 'ณัชพล มีทุม', 7),
-(77, 'Dribbling', 4, 6, 2, 'ณัชพล มีทุม', 7),
-(78, 'Intercept', 4, 4, 2, 'ณัชพล มีทุม', 7),
-(79, 'Shooting', 0, 1, 2, 'ณัชพล มีทุม', 7),
-(80, 'Heading', 2, 3, 2, 'ณัชพล มีทุม', 7),
-(81, 'Passing', 33, 39, 2, 'จิราเจต พ่วงรอด', 8),
-(82, 'Dribbling', 8, 11, 2, 'จิราเจต พ่วงรอด', 8),
-(83, 'Intercept', 3, 4, 2, 'จิราเจต พ่วงรอด', 8),
-(84, 'Shooting', 2, 3, 2, 'จิราเจต พ่วงรอด', 8),
-(85, 'Heading', 7, 8, 2, 'จิราเจต พ่วงรอด', 8),
-(86, 'Passing', 38, 45, 2, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(87, 'Dribbling', 6, 7, 2, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(88, 'Intercept', 0, 2, 2, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(89, 'Shooting', 1, 4, 2, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(90, 'Heading', 0, 1, 2, 'เฉลิมชัย วงษ์พันเสือ', 9),
-(91, 'Passing', 26, 34, 2, 'พงศธร พยัคเกษมโสภณ', 10),
-(92, 'Shooting', 2, 3, 2, 'พงศธร พยัคเกษมโสภณ', 10),
-(93, 'Heading', 1, 5, 2, 'พงศธร พยัคเกษมโสภณ', 10),
-(94, 'Dribbling', 13, 16, 2, 'พงศธร พยัคเกษมโสภณ', 10),
-(95, 'Passing', 19, 24, 2, 'ศรราม ม่วงหมี', 11),
-(96, 'Shooting', 1, 10, 2, 'ศรราม ม่วงหมี', 11),
-(97, 'Heading', 11, 16, 2, 'ศรราม ม่วงหมี', 11),
-(98, 'Dribbling', 2, 4, 2, 'ศรราม ม่วงหมี', 11),
-(99, 'Passing', 19, 27, 2, 'ธนากร ตุ้มทอง', 12),
-(100, 'Shooting', 2, 2, 2, 'ธนากร ตุ้มทอง', 12),
-(101, 'Heading', 0, 2, 2, 'ธนากร ตุ้มทอง', 12),
-(102, 'Dribbling', 11, 14, 2, 'ธนากร ตุ้มทอง', 12),
-(103, 'Save', 4, 10, 1, 'นวพล ศรีเวียงธวัช', 13),
-(104, 'Passing', 10, 11, 1, 'นวพล ศรีเวียงธวัช', 13),
-(105, 'Save Penalty', 0, 1, 1, 'นวพล ศรีเวียงธวัช', 13),
-(106, 'Duel 1-1', 1, 2, 1, 'นวพล ศรีเวียงธวัช', 13),
-(107, 'Save', 2, 3, 1, 'ณัฐวัตร นามเจริญ', 14),
-(108, 'Passing', 5, 10, 1, 'ณัฐวัตร นามเจริญ', 14),
-(109, 'Save Penalty', 0, 2, 1, 'ณัฐวัตร นามเจริญ', 14),
-(110, 'Duel 1-1', 1, 2, 1, 'ณัฐวัตร นามเจริญ', 14),
-(111, 'Passing', 20, 30, 1, 'สุทธิราช ป้อมสุวรรณ', 15),
-(112, 'Intercept', 2, 5, 1, 'สุทธิราช ป้อมสุวรรณ', 15),
-(113, 'Heading', 2, 6, 1, 'สุทธิราช ป้อมสุวรรณ', 15),
-(114, 'Tackle', 1, 5, 1, 'สุทธิราช ป้อมสุวรรณ', 15),
-(115, 'Passing', 24, 30, 1, 'ณัฐชนน เทศมงคล', 16),
-(116, 'Intercept', 4, 7, 1, 'ณัฐชนน เทศมงคล', 16),
-(117, 'Heading', 12, 20, 1, 'ณัฐชนน เทศมงคล', 16),
-(118, 'Tackle', 2, 4, 1, 'ณัฐชนน เทศมงคล', 16),
-(119, 'Passing', 27, 29, 1, 'ทิยะ ปานะดิษฐ', 17),
-(120, 'Intercept', 6, 6, 1, 'ทิยะ ปานะดิษฐ', 17),
-(121, 'Heading', 2, 9, 1, 'ทิยะ ปานะดิษฐ', 17),
-(122, 'Tackle', 4, 6, 1, 'ทิยะ ปานะดิษฐ', 17),
-(123, 'Passing', 20, 30, 1, 'ธีรภาพ ฮวดเจริญ', 18),
-(124, 'Dribbling', 2, 4, 1, 'ธีรภาพ ฮวดเจริญ', 18),
-(125, 'Intercept', 7, 10, 1, 'ธีรภาพ ฮวดเจริญ', 18),
-(126, 'Shooting', 0, 1, 1, 'ธีรภาพ ฮวดเจริญ', 18),
-(127, 'Heading', 5, 8, 1, 'ธีรภาพ ฮวดเจริญ', 18),
-(128, 'Passing', 30, 37, 1, 'สรวิชญ์ ขันอาสา', 19),
-(129, 'Dribbling', 3, 5, 1, 'สรวิชญ์ ขันอาสา', 19),
-(130, 'Intercept', 5, 9, 1, 'สรวิชญ์ ขันอาสา', 19),
-(131, 'Shooting', 1, 2, 1, 'สรวิชญ์ ขันอาสา', 19),
-(132, 'Heading', 4, 6, 1, 'สรวิชญ์ ขันอาสา', 19),
-(133, 'Passing', 18, 22, 1, 'ศักดินา ศรีราม', 20),
-(134, 'Dribbling', 5, 10, 1, 'ศักดินา ศรีราม', 20),
-(135, 'Intercept', 1, 5, 1, 'ศักดินา ศรีราม', 20),
-(136, 'Shooting', 1, 3, 1, 'ศักดินา ศรีราม', 20),
-(137, 'Heading', 2, 5, 1, 'ศักดินา ศรีราม', 20),
-(138, 'Passing', 11, 15, 1, 'ทศพร จันทรทักษิณ', 21),
-(139, 'Shooting', 2, 12, 1, 'ทศพร จันทรทักษิณ', 21),
-(140, 'Heading', 6, 10, 1, 'ทศพร จันทรทักษิณ', 21),
-(141, 'Dribbling', 7, 11, 1, 'ทศพร จันทรทักษิณ', 21),
-(142, 'Passing', 7, 10, 1, 'ธนานันท์ วอนเพียร', 22),
-(143, 'Shooting', 1, 5, 1, 'ธนานันท์ วอนเพียร', 22),
-(144, 'Heading', 3, 6, 1, 'ธนานันท์ วอนเพียร', 22),
-(145, 'Dribbling', 5, 9, 1, 'ธนานันท์ วอนเพียร', 22),
-(146, 'Passing', 10, 15, 1, 'พงศ์พันธ์ เดชวงศ์ญา', 23),
-(147, 'Shooting', 0, 3, 1, 'พงศ์พันธ์ เดชวงศ์ญา', 23),
-(148, 'Heading', 7, 8, 1, 'พงศ์พันธ์ เดชวงศ์ญา', 23),
-(149, 'Dribbling', 1, 3, 1, 'พงศ์พันธ์ เดชวงศ์ญา', 23),
-(150, 'Save', 1, 3, 2, 'นวพล ศรีเวียงธวัช', 13),
-(151, 'Passing', 7, 10, 2, 'นวพล ศรีเวียงธวัช', 13),
-(152, 'Save Penalty', 1, 1, 2, 'นวพล ศรีเวียงธวัช', 13),
-(153, 'Duel 1-1', 1, 2, 2, 'นวพล ศรีเวียงธวัช', 13),
-(154, 'Save', 5, 5, 2, 'ณัฐวัตร นามเจริญ', 14),
-(155, 'Passing', 5, 10, 2, 'ณัฐวัตร นามเจริญ', 14),
-(156, 'Save Penalty', 0, 2, 2, 'ณัฐวัตร นามเจริญ', 14),
-(157, 'Duel 1-1', 1, 1, 2, 'ณัฐวัตร นามเจริญ', 14),
-(158, 'Passing', 22, 22, 2, 'สุทธิราช ป้อมสุวรรณ', 15),
-(159, 'Intercept', 6, 6, 2, 'สุทธิราช ป้อมสุวรรณ', 15),
-(160, 'Heading', 0, 3, 2, 'สุทธิราช ป้อมสุวรรณ', 15),
-(161, 'Tackle', 0, 5, 2, 'สุทธิราช ป้อมสุวรรณ', 15),
-(162, 'Passing', 20, 27, 2, 'ณัฐชนน เทศมงคล', 16),
-(163, 'Intercept', 3, 5, 2, 'ณัฐชนน เทศมงคล', 16),
-(164, 'Heading', 16, 16, 2, 'ณัฐชนน เทศมงคล', 16),
-(165, 'Tackle', 0, 3, 2, 'ณัฐชนน เทศมงคล', 16),
-(166, 'Passing', 29, 40, 2, 'ทิยะ ปานะดิษฐ', 17),
-(167, 'Intercept', 5, 6, 2, 'ทิยะ ปานะดิษฐ', 17),
-(168, 'Heading', 5, 8, 2, 'ทิยะ ปานะดิษฐ', 17),
-(169, 'Tackle', 5, 5, 2, 'ทิยะ ปานะดิษฐ', 17),
-(170, 'Passing', 25, 33, 2, 'ธีรภาพ ฮวดเจริญ', 18),
-(171, 'Dribbling', 2, 3, 2, 'ธีรภาพ ฮวดเจริญ', 18),
-(172, 'Intercept', 6, 7, 2, 'ธีรภาพ ฮวดเจริญ', 18),
-(173, 'Shooting', 0, 2, 2, 'ธีรภาพ ฮวดเจริญ', 18),
-(174, 'Heading', 5, 7, 2, 'ธีรภาพ ฮวดเจริญ', 18),
-(175, 'Passing', 29, 34, 2, 'สรวิชญ์ ขันอาสา', 19),
-(176, 'Dribbling', 3, 6, 2, 'สรวิชญ์ ขันอาสา', 19),
-(177, 'Intercept', 5, 9, 2, 'สรวิชญ์ ขันอาสา', 19),
-(178, 'Shooting', 2, 5, 2, 'สรวิชญ์ ขันอาสา', 19),
-(179, 'Heading', 3, 6, 2, 'สรวิชญ์ ขันอาสา', 19),
-(180, 'Passing', 19, 25, 2, 'ศักดินา ศรีราม', 20),
-(181, 'Dribbling', 6, 9, 2, 'ศักดินา ศรีราม', 20),
-(182, 'Intercept', 2, 5, 2, 'ศักดินา ศรีราม', 20),
-(183, 'Shooting', 2, 5, 2, 'ศักดินา ศรีราม', 20),
-(184, 'Heading', 1, 4, 2, 'ศักดินา ศรีราม', 20),
-(185, 'Passing', 12, 17, 2, 'ทศพร จันทรทักษิณ', 21),
-(186, 'Shooting', 0, 7, 2, 'ทศพร จันทรทักษิณ', 21),
-(187, 'Heading', 10, 15, 2, 'ทศพร จันทรทักษิณ', 21),
-(188, 'Dribbling', 4, 7, 2, 'ทศพร จันทรทักษิณ', 21),
-(189, 'Passing', 8, 12, 2, 'ธนานันท์ วอนเพียร', 22),
-(190, 'Shooting', 1, 4, 2, 'ธนานันท์ วอนเพียร', 22),
-(191, 'Heading', 3, 7, 2, 'ธนานันท์ วอนเพียร', 22),
-(192, 'Dribbling', 7, 9, 2, 'ธนานันท์ วอนเพียร', 22),
-(193, 'Passing', 11, 19, 2, 'พงศ์พันธ์ เดชวงศ์ญา', 23),
-(194, 'Shooting', 0, 2, 2, 'พงศ์พันธ์ เดชวงศ์ญา', 23),
-(195, 'Heading', 7, 10, 2, 'พงศ์พันธ์ เดชวงศ์ญา', 23),
-(196, 'Dribbling', 0, 1, 2, 'พงศ์พันธ์ เดชวงศ์ญา', 23);
+INSERT INTO `statistics` (`id_sta`, `list`, `got`, `chance`, `id_match`, `id_m`) VALUES
+(1, 'Save', 3, 5, 1, 1),
+(2, 'Passing', 5, 11, 1, 1),
+(3, 'Save Penalty', 0, 1, 1, 1),
+(4, 'Duel 1-1', 0, 1, 1, 1),
+(5, 'Save', 5, 5, 1, 2),
+(6, 'Passing', 11, 11, 1, 2),
+(7, 'Save Penalty', 1, 1, 1, 2),
+(8, 'Duel 1-1', 3, 3, 1, 2),
+(9, 'Passing', 18, 25, 1, 3),
+(10, 'Intercept', 3, 5, 1, 3),
+(11, 'Heading', 6, 6, 1, 3),
+(12, 'Tackle', 5, 5, 1, 3),
+(13, 'Passing', 28, 28, 1, 4),
+(14, 'Intercept', 7, 7, 1, 4),
+(15, 'Heading', 17, 17, 1, 4),
+(16, 'Tackle', 4, 4, 1, 4),
+(17, 'Passing', 17, 35, 1, 5),
+(18, 'Intercept', 2, 6, 1, 5),
+(19, 'Heading', 0, 9, 1, 5),
+(20, 'Tackle', 4, 6, 1, 5),
+(21, 'Passing', 20, 34, 1, 6),
+(22, 'Intercept', 4, 4, 1, 6),
+(23, 'Heading', 1, 5, 1, 6),
+(24, 'Tackle', 3, 5, 1, 6),
+(25, 'Passing', 35, 35, 1, 7),
+(26, 'Dribbling', 5, 6, 1, 7),
+(27, 'Intercept', 5, 5, 1, 7),
+(28, 'Shooting', 1, 1, 1, 7),
+(29, 'Heading', 2, 6, 1, 7),
+(30, 'Passing', 29, 34, 1, 8),
+(31, 'Dribbling', 7, 9, 1, 8),
+(32, 'Intercept', 3, 4, 1, 8),
+(33, 'Shooting', 3, 3, 1, 8),
+(34, 'Heading', 5, 6, 1, 8),
+(35, 'Passing', 33, 40, 1, 9),
+(36, 'Dribbling', 5, 7, 1, 9),
+(37, 'Intercept', 2, 4, 1, 9),
+(38, 'Shooting', 1, 5, 1, 9),
+(39, 'Heading', 1, 3, 1, 9),
+(40, 'Passing', 20, 30, 1, 10),
+(41, 'Shooting', 2, 5, 1, 10),
+(42, 'Heading', 2, 4, 1, 10),
+(43, 'Dribbling', 6, 10, 1, 10),
+(44, ' Passing', 18, 20, 1, 11),
+(45, 'Shooting', 0, 5, 1, 11),
+(46, 'Heading', 9, 14, 1, 11),
+(47, 'Dribbling', 3, 6, 1, 11),
+(48, 'Passing', 16, 25, 1, 12),
+(49, 'Shooting', 3, 3, 1, 12),
+(50, 'Heading', 2, 3, 1, 12),
+(51, 'Dribbling', 10, 12, 1, 12),
+(52, 'Save', 3, 3, 2, 1),
+(53, 'Passing', 7, 10, 2, 1),
+(54, 'Save Penalty', 0, 1, 2, 1),
+(55, 'Duel 1-1', 1, 2, 2, 1),
+(56, 'Save', 3, 3, 2, 2),
+(57, 'Passing', 7, 8, 2, 2),
+(58, 'Save Penalty', 1, 1, 2, 2),
+(59, 'Duel 1-1', 2, 2, 2, 2),
+(60, 'Passing', 22, 24, 2, 3),
+(61, 'Intercept', 5, 6, 2, 3),
+(62, 'Heading', 3, 3, 2, 3),
+(63, 'Tackle', 4, 5, 2, 3),
+(64, 'Passing', 27, 27, 2, 4),
+(65, 'Intercept', 2, 5, 2, 4),
+(66, 'Heading', 15, 16, 2, 4),
+(67, 'Tackle', 3, 3, 2, 4),
+(68, 'Passing', 38, 38, 2, 5),
+(69, 'Intercept', 5, 6, 2, 5),
+(70, 'Heading', 6, 8, 2, 5),
+(71, 'Tackle', 1, 5, 2, 5),
+(72, 'Passing', 32, 39, 2, 6),
+(73, 'Intercept', 4, 4, 2, 6),
+(74, 'Heading', 2, 3, 2, 6),
+(75, 'Tackle', 4, 5, 2, 6),
+(76, 'Passing', 40, 42, 2, 7),
+(77, 'Dribbling', 4, 6, 2, 7),
+(78, 'Intercept', 4, 4, 2, 7),
+(79, 'Shooting', 0, 1, 2, 7),
+(80, 'Heading', 2, 3, 2, 7),
+(81, 'Passing', 33, 39, 2, 8),
+(82, 'Dribbling', 8, 11, 2, 8),
+(83, 'Intercept', 3, 4, 2, 8),
+(84, 'Shooting', 2, 3, 2, 8),
+(85, 'Heading', 7, 8, 2, 8),
+(86, 'Passing', 38, 45, 2, 9),
+(87, 'Dribbling', 6, 7, 2, 9),
+(88, 'Intercept', 0, 2, 2, 9),
+(89, 'Shooting', 1, 4, 2, 9),
+(90, 'Heading', 0, 1, 2, 9),
+(91, 'Passing', 26, 34, 2, 10),
+(92, 'Shooting', 2, 3, 2, 10),
+(93, 'Heading', 1, 5, 2, 10),
+(94, 'Dribbling', 13, 16, 2, 10),
+(95, 'Passing', 19, 24, 2, 11),
+(96, 'Shooting', 1, 10, 2, 11),
+(97, 'Heading', 11, 16, 2, 11),
+(98, 'Dribbling', 2, 4, 2, 11),
+(99, 'Passing', 19, 27, 2, 12),
+(100, 'Shooting', 2, 2, 2, 12),
+(101, 'Heading', 0, 2, 2, 12),
+(102, 'Dribbling', 11, 14, 2, 12),
+(103, 'Save', 4, 10, 1, 13),
+(104, 'Passing', 10, 11, 1, 13),
+(105, 'Save Penalty', 0, 1, 1, 13),
+(106, 'Duel 1-1', 1, 2, 1, 13),
+(107, 'Save', 2, 3, 1, 14),
+(108, 'Passing', 5, 10, 1, 14),
+(109, 'Save Penalty', 0, 2, 1, 14),
+(110, 'Duel 1-1', 1, 2, 1, 14),
+(111, 'Passing', 20, 30, 1, 15),
+(112, 'Intercept', 2, 5, 1, 15),
+(113, 'Heading', 2, 6, 1, 15),
+(114, 'Tackle', 1, 5, 1, 15),
+(115, 'Passing', 24, 30, 1, 16),
+(116, 'Intercept', 4, 7, 1, 16),
+(117, 'Heading', 12, 20, 1, 16),
+(118, 'Tackle', 2, 4, 1, 16),
+(119, 'Passing', 27, 29, 1, 17),
+(120, 'Intercept', 6, 6, 1, 17),
+(121, 'Heading', 2, 9, 1, 17),
+(122, 'Tackle', 4, 6, 1, 17),
+(123, 'Passing', 20, 30, 1, 18),
+(124, 'Dribbling', 2, 4, 1, 18),
+(125, 'Intercept', 7, 10, 1, 18),
+(126, 'Shooting', 0, 1, 1, 18),
+(127, 'Heading', 5, 8, 1, 18),
+(128, 'Passing', 30, 37, 1, 19),
+(129, 'Dribbling', 3, 5, 1, 19),
+(130, 'Intercept', 5, 9, 1, 19),
+(131, 'Shooting', 1, 2, 1, 19),
+(132, 'Heading', 4, 6, 1, 19),
+(133, 'Passing', 18, 22, 1, 20),
+(134, 'Dribbling', 5, 10, 1, 20),
+(135, 'Intercept', 1, 5, 1, 20),
+(136, 'Shooting', 1, 3, 1, 20),
+(137, 'Heading', 2, 5, 1, 20),
+(138, 'Passing', 11, 15, 1, 21),
+(139, 'Shooting', 2, 12, 1, 21),
+(140, 'Heading', 6, 10, 1, 21),
+(141, 'Dribbling', 7, 11, 1, 21),
+(142, 'Passing', 7, 10, 1, 22),
+(143, 'Shooting', 1, 5, 1, 22),
+(144, 'Heading', 3, 6, 1, 22),
+(145, 'Dribbling', 5, 9, 1, 22),
+(146, 'Passing', 10, 15, 1, 23),
+(147, 'Shooting', 0, 3, 1, 23),
+(148, 'Heading', 7, 8, 1, 23),
+(149, 'Dribbling', 1, 3, 1, 23),
+(150, 'Save', 1, 3, 2, 13),
+(151, 'Passing', 7, 10, 2, 13),
+(152, 'Save Penalty', 1, 1, 2, 13),
+(153, 'Duel 1-1', 1, 2, 2, 13),
+(154, 'Save', 5, 5, 2, 14),
+(155, 'Passing', 5, 10, 2, 14),
+(156, 'Save Penalty', 0, 2, 2, 14),
+(157, 'Duel 1-1', 1, 1, 2, 14),
+(158, 'Passing', 22, 22, 2, 15),
+(159, 'Intercept', 6, 6, 2, 15),
+(160, 'Heading', 0, 3, 2, 15),
+(161, 'Tackle', 0, 5, 2, 15),
+(162, 'Passing', 20, 27, 2, 16),
+(163, 'Intercept', 3, 5, 2, 16),
+(164, 'Heading', 16, 16, 2, 16),
+(165, 'Tackle', 0, 3, 2, 16),
+(166, 'Passing', 29, 40, 2, 17),
+(167, 'Intercept', 5, 6, 2, 17),
+(168, 'Heading', 5, 8, 2, 17),
+(169, 'Tackle', 5, 5, 2, 17),
+(170, 'Passing', 25, 33, 2, 18),
+(171, 'Dribbling', 2, 3, 2, 18),
+(172, 'Intercept', 6, 7, 2, 18),
+(173, 'Shooting', 0, 2, 2, 18),
+(174, 'Heading', 5, 7, 2, 18),
+(175, 'Passing', 29, 34, 2, 19),
+(176, 'Dribbling', 3, 6, 2, 19),
+(177, 'Intercept', 5, 9, 2, 19),
+(178, 'Shooting', 2, 5, 2, 19),
+(179, 'Heading', 3, 6, 2, 19),
+(180, 'Passing', 19, 25, 2, 20),
+(181, 'Dribbling', 6, 9, 2, 20),
+(182, 'Intercept', 2, 5, 2, 20),
+(183, 'Shooting', 2, 5, 2, 20),
+(184, 'Heading', 1, 4, 2, 20),
+(185, 'Passing', 12, 17, 2, 21),
+(186, 'Shooting', 0, 7, 2, 21),
+(187, 'Heading', 10, 15, 2, 21),
+(188, 'Dribbling', 4, 7, 2, 21),
+(189, 'Passing', 8, 12, 2, 22),
+(190, 'Shooting', 1, 4, 2, 22),
+(191, 'Heading', 3, 7, 2, 22),
+(192, 'Dribbling', 7, 9, 2, 22),
+(193, 'Passing', 11, 19, 2, 23),
+(194, 'Shooting', 0, 2, 2, 23),
+(195, 'Heading', 7, 10, 2, 23),
+(196, 'Dribbling', 0, 1, 2, 23);
 
 -- --------------------------------------------------------
 
@@ -532,7 +592,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `type`, `name`, `created_at`,
 (7, 'admin', '123456', 'Admin', 'Admin', '2021-08-25 01:32:52', '2021-08-25 01:32:52'),
 (8, 'player01', '123456', 'Player', 'player01', '2021-08-27 08:00:19', '2021-08-27 08:00:19'),
 (9, 'player02', '123456', 'Player', 'player02', NULL, NULL),
-(10, 'coach01', '123456', 'Coach', 'coach01', NULL, NULL);
+(10, 'coach01', '123456', 'Coach', 'coach01', NULL, NULL),
+(11, 'coach02', '123456', 'Coach', 'ณัชพล มีทุม', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -567,7 +628,8 @@ INSERT INTO `user_details` (`id`, `username`, `name`, `nickname`, `position`, `n
 (10, 'player01', 'ธนากร ตุ้มทอง', 'เมฆ', 'กองหน้า', '11', 'ธนากร ตุ้มทอง.jpg', 'Ready', NULL, NULL, NULL, NULL, NULL),
 (11, 'player01', 'พินโญ สัมฤทธิ์', 'เพชร', 'กองกลาง', '1', 'พินโญ สัมฤทธิ์.jpg', 'Ready', NULL, NULL, NULL, NULL, NULL),
 (12, 'player01', 'ศิวะ กรนุ่ม', 'ปอ', 'ประตู', '13', 'ศิวะ กรนุ่ม.jpg', 'Ready', NULL, NULL, NULL, NULL, NULL),
-(13, 'player01', 'ณัชพล มีทุม', 'ปาย', 'กองหลัง', '14', 'ณัชพล มีทุม.jpg', 'Ready', NULL, NULL, NULL, NULL, NULL);
+(13, 'player01', 'ณัชพล มีทุม', 'ปาย', 'กองหลัง', '14', 'ณัชพล มีทุม.jpg', 'Ready', NULL, NULL, NULL, NULL, NULL),
+(15, 'coach01', 'Sunayoshi', 'Suna', 'กองกลาง', '99', 'Sunayoshi.jpg', 'Ready', NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -578,6 +640,12 @@ INSERT INTO `user_details` (`id`, `username`, `name`, `nickname`, `position`, `n
 --
 ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `list`
+--
+ALTER TABLE `list`
+  ADD PRIMARY KEY (`id_list`);
 
 --
 -- Indexes for table `member_rival`
@@ -604,6 +672,12 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `player`
   ADD PRIMARY KEY (`id_m`);
+
+--
+-- Indexes for table `position`
+--
+ALTER TABLE `position`
+  ADD PRIMARY KEY (`id_position`);
 
 --
 -- Indexes for table `rival`
@@ -643,13 +717,19 @@ ALTER TABLE `user_details`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `list`
+--
+ALTER TABLE `list`
+  MODIFY `id_list` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `member_rival`
 --
 ALTER TABLE `member_rival`
-  MODIFY `id_mr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_mr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -667,37 +747,43 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `player`
 --
 ALTER TABLE `player`
-  MODIFY `id_m` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_m` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `position`
+--
+ALTER TABLE `position`
+  MODIFY `id_position` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `rival`
 --
 ALTER TABLE `rival`
-  MODIFY `id_rival` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_rival` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `statistics`
 --
 ALTER TABLE `statistics`
-  MODIFY `id_sta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id_sta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
 
 --
 -- AUTO_INCREMENT for table `statistics_rival`
 --
 ALTER TABLE `statistics_rival`
-  MODIFY `id_sta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id_sta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
