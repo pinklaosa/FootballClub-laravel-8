@@ -166,7 +166,9 @@
                                 "<td><p>" + (name) + "</p></td>" +
                                 "<td><p>" + (position) + "</p></td>" +
                                 "<td class='text-center'><p> " +
+                                "@if(session('type') === 'Coach')"+
                                 "<button class='button is-primary addStatistic' value='" + id + "'>ADD</button>" +
+                                "@endif"+
                                 "<button class='button is-ghost myModalaStat' value='" + id + "'>DETAILS</button>" +
                                 "</p></td>" +
                                 "</tr>";

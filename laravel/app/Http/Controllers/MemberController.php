@@ -112,15 +112,17 @@ class MemberController extends Controller
             'id' => 'required',
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        if ($request->photo == null) {
-            $photo = $request->name + '.png';
-        } else {
-            if ($img = $request->file('photo')) {
-                $path = 'assets/img/profile/';
-                $imgName = $request->rivalteam_name . '.png';
+        
+
+        if($request->hasFile('photo')){
+            $img = $request->file('photo');
+            $path = 'assets/img/profile/';
+                $imgName = $request->name . '.png';
                 $img->move($path, $imgName);
                 $photo = "$imgName";
-            }
+        }else{
+            $imgName = $request->name + '.png';
+            $photo = "$imgName";
         }
 
         $update = DB::table('player')
@@ -150,19 +152,18 @@ class MemberController extends Controller
     public function deletedPlayer($id_m)
     {
         $deleted = DB::table('player')
-            ->where('id_m',$id_m)
+            ->where('id_m', $id_m)
             ->delete();
 
-        if($deleted){
+        if ($deleted) {
             return response()->json([
-                'code'=>200,
-                'msg'=>'The record had deleted.'
+                'code' => 200,
+                'msg' => 'The record had deleted.'
             ]);
-        }    
-        else{
+        } else {
             return response()->json([
-                'code'=>0,
-                'msg'=>'Something went wrong.'
+                'code' => 0,
+                'msg' => 'Something went wrong.'
             ]);
         }
     }

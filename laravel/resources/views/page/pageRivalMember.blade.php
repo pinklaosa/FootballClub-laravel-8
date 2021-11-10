@@ -255,6 +255,7 @@
                 <div class="col-10">
                     <h1 class="font-block">{{ $namerival->name_rival }} Team</h1>
                 </div>
+                @if(session('type') === 'Coach')
                 <div class="col-2 text-center">
                     <h1 class="font-block">For coach</h1>
                     <p>
@@ -266,6 +267,7 @@
                         </button>
                     </p>
                 </div>
+                @endif
             </div>
         </div>
         <div class="table-block">
@@ -276,7 +278,9 @@
                         <th class="has-text-white-bis">Profile</th>
                         <th class="has-text-white-bis">Position</th>
                         <th class="has-text-white-bis" style="text-align: center;">Statistics</th>
+                        @if(session('type') === 'Coach')
                         <th class="has-text-white-bis text-center">Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -292,15 +296,19 @@
                             <p>{{ $item->position_mr }}</p>
                         </td>
                         <td style="text-align: center;">
+                            @if(session('type') === 'Coach')
                             <button class='button is-primary addStatisticRival' value='{{ $item->id_mr }}'>ADD</button>
+                            @endif
                             <button type="button" class="myModala button is-ghost is-inverted" value="{{ $item->id_mr }}">DETAILS</button>
                         </td>
+                        @if(session('type') === 'Coach')
                         <td class="text-center">
                             <div class="btn-group btn-group-sm">
                                 <button type="button" class="btn btn-primary editmember" value='{{ $item->id_mr }}'>EDIT</button>
                                 <button type="button" class="btn btn-danger deletemember" value='{{ $item->id_mr }}'>DELETE</button>
                             </div>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

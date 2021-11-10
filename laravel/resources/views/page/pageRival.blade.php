@@ -46,6 +46,7 @@
                 <div class="col-10">
                     <h1 class="font-block">Team</h1>
                 </div>
+                @if(session('type') === 'Coach')
                 <div class="col-2 text-center">
                     <h1 class="font-block">For coach</h1>
                     <p>
@@ -57,6 +58,7 @@
                         </button>
                     </p>
                 </div>
+                @endif
             </div>
         </div>
         <section class="section" id="rival_team">

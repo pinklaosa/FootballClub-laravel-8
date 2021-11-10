@@ -73,8 +73,10 @@
             <li class="profile">
                 <div class="profile-details">
                     <div class="name_job">
-                        <div class="name">Hello</div>
-                        <div class="job">Position</div>
+                        <div class="name">
+                            Logged by
+                        </div>
+                        <div class="job mb-5"><span id="sestype">{{ session('type') }}</span></div>
                     </div>
                 </div>
                 <a href="logout">

@@ -8,7 +8,6 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
 class CustomAuthController extends Controller
 {
     //this just show page
@@ -66,14 +65,18 @@ class CustomAuthController extends Controller
        if($user){
             if($request->password == $user->password){
                 $request->session()->put('LoggedUser',$user->id);
+
                 $type = DB::table('users')
                     ->where('id',session('LoggedUser'))
                     ->value('type');
-                if($type == "Admin"){
+                if($type == "Admin"){       
+                    session(['type'=>$type]);
                     return redirect('register');
                 }else if($type == "Player"){
-                    return redirect('member')->with('player','none');
+                    session(['type'=>$type]);
+                    return redirect('member');
                 }else if($type == "Coach"){
+                    session(['type'=>$type]);
                     return redirect('member');
                 }
             }else{

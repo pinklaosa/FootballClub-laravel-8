@@ -205,12 +205,13 @@
     <div class="block-user">
         <div class="title-block">
             <h1 class="font-block">Player</h1>
+            @if(session('type') === 'Coach')
             <div class="row">
                 <div class="col-10"></div>
                 <div class="col-2 text-center">
                     <h1 class="font-block">For coach</h1>
                     <p>
-                        <button class="button is-light addPlayer">
+                        <button class="button is-light {{ session('type') === 'Coach' ? 'addPlayer' : null }}">
                             <span class="icon">
                                 <i class="fas fa-user-plus"></i>
                             </span>
@@ -219,6 +220,7 @@
                     </p>
                 </div>
             </div>
+            @endif
         </div>
         <section class="section" style="margin-top: -40px;">
             <div class="table-block">
@@ -229,7 +231,9 @@
                             <th class="has-text-white-bis">Profile</th>
                             <th class="has-text-white-bis">Position</th>
                             <th class="has-text-white-bis">Status</th>
+                            @if(session('type') === 'Coach')
                             <th class="has-text-white-bis">Action</th>
+                            @endif
                             <!-- <th class="has-text-white-bis">Edit</th> -->
                         </tr>
                     </thead>
@@ -256,12 +260,14 @@
                             @if( $item->status == "busy")
                             <td><span class="tag is-danger">Busy</span></td>
                             @endif
+                            @if(session('type') === 'Coach')
                             <td>
                                 <div class="btn-group btn-group-sm">
                                     <button type="button" class="btn btn-primary editPlayer" value='{{ $item->id_m }}'>EDIT</button>
                                     <button type="button" class="btn btn-danger deletePlayer" value='{{ $item->id_m }}'>DELETE</button>
                                 </div>
                             </td>
+                            @endif
                             <!-- <td><i class='fas fa-user-edit' style='font-size:24px; color:#090255;'></i></td> -->
                         </tr>
                         @endforeach

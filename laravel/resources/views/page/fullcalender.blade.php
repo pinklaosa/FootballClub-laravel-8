@@ -1,9 +1,10 @@
 @extends('page.pageMain')
 @section('title','Calender')
 @section('body')
-<section class="section">   
-        <h1 class="title">Calender</h1>
-        <div id='calendar'></div>
+<section class="section">
+    <h1 class="title">Calender</h1>
+    <div id='calendar'></div>
+    <input type="text" name="type" id="type" value="{{ session('type') }}" hidden>
 </section>
 
 
@@ -18,6 +19,7 @@
             }
         });
 
+        const type = $('#type').val();
         var calendar = $('#calendar').fullCalendar({
             editable: true,
             events: SITEURL + "/fullcalender",
@@ -33,70 +35,78 @@
             selectable: true,
             selectHelper: true,
             select: function(start, end, allDay) {
-                var title = prompt('Event Title:');
-                if (title) {
-                    var start = $.fullCalendar.formatDate(start, "Y-MM-DD");
-                    var end = $.fullCalendar.formatDate(end, "Y-MM-DD");
-                    $.ajax({
-                        url: SITEURL + "/fullcalenderAjax",
-                        data: {
-                            title: title,
-                            start: start,
-                            end: end,
-                            type: 'add'
-                        },
-                        type: "POST",
-                        success: function(data) {
-                            displayMessage("Event Created Successfully");
-
-                            calendar.fullCalendar('renderEvent', {
-                                id: data.id,
+                if (type === 'Coach') {
+                    var title = prompt('Event Title:');
+                    if (title) {
+                        var start = $.fullCalendar.formatDate(start, "Y-MM-DD");
+                        var end = $.fullCalendar.formatDate(end, "Y-MM-DD");
+                        $.ajax({
+                            url: SITEURL + "/fullcalenderAjax",
+                            data: {
                                 title: title,
                                 start: start,
                                 end: end,
-                                allDay: allDay
-                            }, true);
+                                type: 'add'
+                            },
+                            type: "POST",
+                            success: function(data) {
+                                displayMessage("Event Created Successfully");
+                                calendar.fullCalendar('renderEvent', {
+                                    id: data.id,
+                                    title: title,
+                                    start: start,
+                                    end: end,
+                                    allDay: allDay
+                                }, true);
 
-                            calendar.fullCalendar('unselect');
-                        }
-                    });
-                }
-            },
-            eventDrop: function(event, delta) {
-                var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
-                var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
-
-                $.ajax({
-                    url: SITEURL + '/fullcalenderAjax',
-                    data: {
-                        title: event.title,
-                        start: start,
-                        end: end,
-                        id: event.id,
-                        type: 'update'
-                    },
-                    type: "POST",
-                    success: function(response) {
-                        displayMessage("Event Updated Successfully");
+                                calendar.fullCalendar('unselect');
+                            }
+                        });
                     }
-                });
+                }
+
             },
-            eventClick: function(event) {
-                var deleteMsg = confirm("Do you really want to delete?");
-                if (deleteMsg) {
+
+            eventDrop: function(event, delta) {
+                if (type === 'Coach') {
+                    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
+                    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
+
                     $.ajax({
-                        type: "POST",
                         url: SITEURL + '/fullcalenderAjax',
                         data: {
+                            title: event.title,
+                            start: start,
+                            end: end,
                             id: event.id,
-                            type: 'delete'
+                            type: 'update'
                         },
+                        type: "POST",
                         success: function(response) {
-                            calendar.fullCalendar('removeEvents', event.id);
-                            displayMessage("Event Deleted Successfully");
+                            displayMessage("Event Updated Successfully");
                         }
                     });
                 }
+            },
+            eventClick: function(event) {
+                if (type === 'Coach') {
+                    var deleteMsg = confirm("Do you really want to delete?");
+                    if (deleteMsg) {
+                        $.ajax({
+                            type: "POST",
+                            url: SITEURL + '/fullcalenderAjax',
+                            data: {
+                                id: event.id,
+                                type: 'delete'
+                            },
+                            success: function(response) {
+                                calendar.fullCalendar('removeEvents', event.id);
+                                displayMessage("Event Deleted Successfully");
+                            }
+                        });
+                    }
+                }
+
             }
 
         });
