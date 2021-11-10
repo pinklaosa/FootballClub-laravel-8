@@ -95,26 +95,31 @@ class AnalysisController extends Controller
                 $got = $data->got;
                 $chance = $data->chance;
                 $pointGoalkeeper[$id_m] = 0;
-                switch ($list) {
-                    case 'Save':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointSaveCal[$id_m] = $calPoint;
-                        break;
-                    case 'Passing':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointPassingCal[$id_m] = $calPoint;
-                        break;
-                    case 'Save Penalty':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointSavePenaltyCal[$id_m] = $calPoint;
-                        break;
-                    case 'Duel 1-1':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointDuelCal[$id_m] = $calPoint;
-                        break;
-                    default:
-                        # code...
-                        break;
+                $idmax = DB::table('statistics')
+                    ->where('id_m', $id_m)
+                    ->max('id_match');
+                if ($data->id_match == $idmax || $data->id_match == ($idmax - 1)) {
+                    switch ($list) {
+                        case 'Save':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointSaveCal[$id_m] = $calPoint;
+                            break;
+                        case 'Passing':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointPassingCal[$id_m] = $calPoint;
+                            break;
+                        case 'Save Penalty':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointSavePenaltyCal[$id_m] = $calPoint;
+                            break;
+                        case 'Duel 1-1':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointDuelCal[$id_m] = $calPoint;
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
                 }
             }
 
@@ -140,25 +145,30 @@ class AnalysisController extends Controller
                 $got = $data->got;
                 $chance = $data->chance;
                 $pointDefender[$id_m] = 0;
-                switch ($list) {
-                    case 'Passing':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointPassCal[$id_m] = $calPoint;
-                        break;
-                    case 'Intercept':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointInterceptCal[$id_m] = $calPoint;
-                        break;
-                    case 'Heading':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointHeadingCal[$id_m] = $calPoint;
-                        break;
-                    case 'Tackle':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointTackleCal[$id_m] = $calPoint;
-                        break;
-                    default:
-                        break;
+                $idmax = DB::table('statistics')
+                    ->where('id_m', $id_m)
+                    ->max('id_match');
+                if ($data->id_match == $idmax || $data->id_match == ($idmax - 1)) {
+                    switch ($list) {
+                        case 'Passing':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointPassCal[$id_m] = $calPoint;
+                            break;
+                        case 'Intercept':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointInterceptCal[$id_m] = $calPoint;
+                            break;
+                        case 'Heading':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointHeadingCal[$id_m] = $calPoint;
+                            break;
+                        case 'Tackle':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointTackleCal[$id_m] = $calPoint;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -195,29 +205,34 @@ class AnalysisController extends Controller
                 $got = $data->got;
                 $chance = $data->chance;
                 $pointMidfield[$id_m] = 0;
-                switch ($list) {
-                    case 'Passing':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointPassMCal[$id_m] = $calPoint;
-                        break;
-                    case 'Dribbling':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointDribblingMCal[$id_m] = $calPoint;
-                        break;
-                    case 'Intercept':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointInterceptMCal[$id_m] = $calPoint;
-                        break;
-                    case 'Shooting':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointShootingMCal[$id_m] = $calPoint;
-                        break;
-                    case 'Heading':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointHeadingMCal[$id_m] = $calPoint;
-                        break;
-                    default:
-                        break;
+                $idmax = DB::table('statistics')
+                    ->where('id_m', $id_m)
+                    ->max('id_match');
+                if ($data->id_match == $idmax || $data->id_match == ($idmax - 1)) {
+                    switch ($list) {
+                        case 'Passing':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointPassMCal[$id_m] = $calPoint;
+                            break;
+                        case 'Dribbling':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointDribblingMCal[$id_m] = $calPoint;
+                            break;
+                        case 'Intercept':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointInterceptMCal[$id_m] = $calPoint;
+                            break;
+                        case 'Shooting':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointShootingMCal[$id_m] = $calPoint;
+                            break;
+                        case 'Heading':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointHeadingMCal[$id_m] = $calPoint;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -256,26 +271,31 @@ class AnalysisController extends Controller
                 $got = $data->got;
                 $chance = $data->chance;
                 $pointForward[$id_m] = 0;
-                switch ($list) {
-                    case 'Passing':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointPassFCal[$id_m] = $calPoint;
-                        break;
-                    case 'Shooting':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointShootingFCal[$id_m] = $calPoint;
-                        break;
-                    case 'Heading':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointHeadingFCal[$id_m] = $calPoint;
-                        break;
-                    case 'Dribbling':
-                        $calPoint = calculatePoint($got, $chance);
-                        $pointDribblingFCal[$id_m] = $calPoint;
-                        break;
-                    default:
-                        # code...
-                        break;
+                $idmax = DB::table('statistics')
+                    ->where('id_m', $id_m)
+                    ->max('id_match');
+                if ($data->id_match == $idmax || $data->id_match == ($idmax - 1)) {
+                    switch ($list) {
+                        case 'Passing':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointPassFCal[$id_m] = $calPoint;
+                            break;
+                        case 'Shooting':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointShootingFCal[$id_m] = $calPoint;
+                            break;
+                        case 'Heading':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointHeadingFCal[$id_m] = $calPoint;
+                            break;
+                        case 'Dribbling':
+                            $calPoint = calculatePoint($got, $chance);
+                            $pointDribblingFCal[$id_m] = $calPoint;
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
                 }
             }
             $idPointPassF = findPoint($pointPassFCal);
@@ -421,12 +441,6 @@ class AnalysisController extends Controller
             }
 
             if ($plan_rival != 0) {
-                // $namePlan = $plan_rival;
-                // if ($plan_rival == "4-4-2D") {
-                //     $plan_rival = "4-4-2";
-                // } else if ($plan_rival == "4-4-1-1") {
-                //     $plan_rival = "4-4-2";
-                // }
                 switch ($plan_rival) {
                     case '4-4-2':
                         $planOne = "4-4-1-1";
@@ -476,7 +490,7 @@ class AnalysisController extends Controller
                     $planTwo = "4-4-2";
                 } else if ($planTwo == "4-3-1-2") {
                     $planTwo = "4-4-3";
-                }else if ($planTwo == "4-1-3-2") {
+                } else if ($planTwo == "4-1-3-2") {
                     $planTwo = "4-4-2";
                 }
 
@@ -516,13 +530,6 @@ class AnalysisController extends Controller
                             ->whereIn('id_m', $playerRecommendTwo)
                             ->get()
                     );
-                    // return view(
-                    //     'page.pageRecommend',
-                    //     $recommendOne,
-                    //     ['plan01' => $namePlanOne],
-                    //     $recommendTwo,
-                    //     ['plan02' => $namePlanTwo]
-                    // );
                     return view('page.pageRecommend')
                         ->with($recommendOne)
                         ->with($recommendTwo)

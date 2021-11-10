@@ -64,13 +64,12 @@ Route::post('/addstatrivalmember',[RivalController::class,'addStatRivalMember'])
 Route::post('/editrivalmember',[RivalController::class,'editRivalMember'])->name('edit.rivalmember');
 Route::get('/deletedmember/{id_mr}',[RivalController::class,'deletedMember']);
 
-Route::get('/statistics',[MemberController::class,'showStatistics']);
+Route::get('/statistics',[MemberController::class,'showStatistics'])->middleware('isLogged');
 Route::get('/getstatistics',[MemberController::class,'usStatistics']);
 Route::get('/statistics/{id_m}',[MemberController::class,'detailStatistics']);
 Route::post('/addstatistics',[MemberController::class,'addStatistics'])->name('add.statistics');
 
-Route::get('/analysis',[AnalysisController::class,'pAnalysis']);
+Route::get('/analysis',[AnalysisController::class,'pAnalysis'])->middleware('isLogged');
 Route::post('/recommend',[AnalysisController::class,'selectedRival'])->name('select.rival');
-
 Route::get('/analysis/{id_mr}',[AnalysisController::class,'getMemberRival']);
 

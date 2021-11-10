@@ -284,10 +284,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $i= 1 ?>
                     @foreach($list as $item)
                     <tr>
                         <td>
-                            <p>{{ $item->id_mr }}</p>
+                            <p><?=$i?></p>
                         </td>
                         <td>
                             <p>{{ $item->name_mr }}</p>
@@ -310,6 +311,7 @@
                         </td>
                         @endif
                     </tr>
+                    <?php $i++ ?>
                     @endforeach
                 </tbody>
             </table>

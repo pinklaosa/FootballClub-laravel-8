@@ -62,7 +62,7 @@
             </div>
         </div>
         <section class="section" id="rival_team">
-            <div class="row" id="row"></div>
+            <div class="row" id="rowrival"></div>
         </section>
 
     </div>
@@ -120,7 +120,7 @@
                                 '</div>' +
                                 '</div>';
 
-                            $('#rival_team #row').append(showTeam);
+                            $('#rival_team #rowrival').append(showTeam);
                         }
                     }
                 }
