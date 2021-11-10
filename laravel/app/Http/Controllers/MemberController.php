@@ -82,6 +82,91 @@ class MemberController extends Controller
         return view('page.member', $data, $name);
     }
 
+    public function getEditMember($id_m)
+    {
+        $member = DB::table('player')
+            ->where('id_m', $id_m)
+            ->get();
+
+        if ($member) {
+            return response()->json([
+                'status' => 200,
+                'player' => $member
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'List not found',
+            ]);
+        }
+    }
+
+    public function updateMember(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'nickname' => 'required',
+            'number' => 'required',
+            'status' => 'required',
+            'position' => 'required',
+            'id' => 'required',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if ($request->photo == null) {
+            $photo = $request->name + '.png';
+        } else {
+            if ($img = $request->file('photo')) {
+                $path = 'assets/img/profile/';
+                $imgName = $request->rivalteam_name . '.png';
+                $img->move($path, $imgName);
+                $photo = "$imgName";
+            }
+        }
+
+        $update = DB::table('player')
+            ->where('id_m', $request->id)
+            ->update([
+                'name' => $request->name,
+                'position' => $request->position,
+                'nickname' => $request->nickname,
+                'number' => $request->number,
+                'photo' => $photo,
+                'status' => $request->status,
+            ]);
+
+        if ($update) {
+            return response()->json([
+                'code' => 200,
+                'msg' => 'Updated successfully'
+            ]);
+        } else {
+            return response()->json([
+                'code' => 0,
+                'msg' => 'Something went wrong'
+            ]);
+        }
+    }
+
+    public function deletedPlayer($id_m)
+    {
+        $deleted = DB::table('player')
+            ->where('id_m',$id_m)
+            ->delete();
+
+        if($deleted){
+            return response()->json([
+                'code'=>200,
+                'msg'=>'The record had deleted.'
+            ]);
+        }    
+        else{
+            return response()->json([
+                'code'=>0,
+                'msg'=>'Something went wrong.'
+            ]);
+        }
+    }
+
     public function usStatistics()
     {
         if (session()->has('LoggedUser')) {

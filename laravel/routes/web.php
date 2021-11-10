@@ -36,6 +36,9 @@ use App\Http\Controllers\RivalController;
 // Route::get('admin/create',[UsersController::class,'create'])->name('admin.create')->middleware('is_admin');
 
 Route::get('/member',[MemberController::class,'member'])->middleware('isLogged');
+Route::get('/geteditmember/{id_m}',[MemberController::class,'getEditMember']);
+Route::post('/updateplayer',[MemberController::class,'updateMember'])->name('update.player');
+Route::get('/deletedplayer/{id_m}',[MemberController::class,'deletedPlayer']);
 
 Route::get('/login',[CustomAuthController::class,'login']);
 Route::get('/register',[CustomAuthController::class,'register'])->middleware('isLogged');
