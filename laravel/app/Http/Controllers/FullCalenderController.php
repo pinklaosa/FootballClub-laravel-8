@@ -24,7 +24,6 @@ class FullCalenderController extends Controller
 
     public function ajax(Request $request)
     {
- 
         switch ($request->type) {
            case 'add':
               $event = Event::create([

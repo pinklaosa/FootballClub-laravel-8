@@ -32,14 +32,15 @@ class AnalysisController extends Controller
         $forward = "forward";
         $defender = "defender";
 
-
+        // got id rival team
         if ($id != 0) {
-
+            //put statistics rival
             $statRivalAll = DB::table('statistics_rival')
                 ->join('member_rival', 'statistics_rival.id_mr', '=', 'member_rival.id_mr')
                 ->where('statistics_rival.id_rival', $id)
                 ->get();
 
+            //put statistics 4 positions
             $statGoalkeeper = DB::table('statistics')
                 ->join('player', 'statistics.id_m', '=', 'player.id_m')
                 ->where('player.position', $goalkeeper)
@@ -60,20 +61,24 @@ class AnalysisController extends Controller
                 ->where('player.position', $forward)
                 ->get();
 
+            //function calculate point
             function calculatePoint($got, $chance)
             {
                 return ($got / $chance) * 100;
             }
 
+            //function find point from array point's position
             function findPoint($point)
             {
                 return array_search(max(array_values($point)), $point);
             }
 
+            //function find player recommend
             function findRec($count, $position)
             {
                 $keyPosition = array();
                 $keyRec = array();
+                //sort point max -> min
                 arsort($position);
                 $keyPosition = array_keys($position);
                 for ($i = 0; $i < $count; $i++) {
@@ -89,6 +94,7 @@ class AnalysisController extends Controller
             $pointSavePenaltyCal = array();
             $pointDuelCal  = array();
 
+            //save point player
             foreach ($statGoalkeeper as $data) {
                 $id_m = $data->id_m;
                 $list = $data->list;
@@ -123,6 +129,7 @@ class AnalysisController extends Controller
                 }
             }
 
+            //find top player
             $idPointPass = findPoint($pointPassingCal);
             $idPointSavePenalty = findPoint($pointSavePenaltyCal);
             if ($idPointPass) {
@@ -131,6 +138,7 @@ class AnalysisController extends Controller
             if ($idPointSavePenalty) {
                 $pointGoalkeeper[$idPointSavePenalty]++;
             }
+
 
             //กองหลัง
             $pointDefender = array();
@@ -316,6 +324,7 @@ class AnalysisController extends Controller
             }
 
 
+            //rival
             foreach ($statRivalAll as $item) {
                 $list_mr = $item->list;
                 $got_mr = $item->got;
@@ -440,6 +449,7 @@ class AnalysisController extends Controller
                 }
             }
 
+            //check input plan
             if ($plan_rival != 0) {
                 switch ($plan_rival) {
                     case '4-4-2':
@@ -470,7 +480,7 @@ class AnalysisController extends Controller
                         break;
                 }
 
-                //recommended
+                //set plan name
                 $namePlanOne = $planOne;
                 $namePlanTwo = $planTwo;
 

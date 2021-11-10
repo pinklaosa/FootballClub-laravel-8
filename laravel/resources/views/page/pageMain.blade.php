@@ -48,6 +48,7 @@
                 </a>
                 <span class="tooltip">Calender</span>
             </li>
+            @if(session('type') === 'Coach')
             <li>
                 <a href="analysis">
                     <i class='bx bx-pie-chart-alt-2'></i>
@@ -55,6 +56,7 @@
                 </a>
                 <span class="tooltip">Analytics</span>
             </li>
+            @endif
             <li>
                 <a href="rival">
                     <i class='fas fa-users'></i>
