@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalysisController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\firstController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,10 @@ use App\Http\Controllers\RivalController;
 
 // Route::resource('user',UsersController::class);
 // Route::get('admin/create',[UsersController::class,'create'])->name('admin.create')->middleware('is_admin');
+
+Route::get('/',[CustomAuthController::class,function(){
+    return redirect('login');
+}]);
 
 Route::get('/member',[MemberController::class,'member'])->middleware('isLogged');
 Route::get('/geteditmember/{id_m}',[MemberController::class,'getEditMember']);
